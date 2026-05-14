@@ -9,874 +9,204 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&family=Racing+Sans+One&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --red: #E8000D;
-    --red-dark: #A30009;
-    --gold: #C9A84C;
-    --gold-light: #F0C84A;
-    --black: #0A0A0A;
-    --dark: #111111;
-    --dark2: #1A1A1A;
-    --dark3: #242424;
-    --dark4: #2E2E2E;
-    --gray: #888;
-    --gray-light: #AAAAAA;
-    --white: #F5F5F0;
-    --text: #E8E8E0;
+    --red:#E8000D;--red-dark:#A30009;--gold:#C9A84C;--gold-light:#F0C84A;
+    --black:#0A0A0A;--dark:#111111;--dark2:#1A1A1A;--dark3:#242424;--dark4:#2E2E2E;
+    --gray:#888;--gray-light:#AAAAAA;--white:#F5F5F0;--text:#E8E8E0;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--text);font-family:'Barlow',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px}
+  .nav-logo{font-family:'Racing Sans One',sans-serif;font-size:1.5rem;color:var(--gold);letter-spacing:0.04em;text-decoration:none}
+  .nav-logo span{color:var(--red)}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:var(--gray-light);text-decoration:none;font-size:0.8rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-sponsor{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);border:1px solid rgba(201,168,76,0.3);padding:5px 14px;border-radius:3px}
+  .nav-sponsor span{color:var(--gold)}
+
+  #hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:64px}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(232,0,13,0.07) 0%,transparent 70%),repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(201,168,76,0.018) 40px,rgba(201,168,76,0.018) 41px)}
+  .hero-number{position:absolute;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(14rem,30vw,32rem);color:rgba(232,0,13,0.055);line-height:1;right:-2rem;top:50%;transform:translateY(-50%);letter-spacing:-0.04em;user-select:none;pointer-events:none}
+  .hero-content{position:relative;z-index:2;text-align:center;max-width:860px;padding:2rem}
+  .hero-tag{display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,0.4);padding:5px 16px;border-radius:2px;margin-bottom:1.5rem}
+  .hero-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(5rem,14vw,11rem);line-height:0.88;text-transform:uppercase;letter-spacing:-0.02em;color:var(--white)}
+  .hero-number-badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,3.5rem);color:var(--gold);background:var(--red);padding:0.1em 0.4em;margin-left:0.2em;border-radius:3px;vertical-align:middle;line-height:1.1}
+  .hero-subtitle{margin-top:1.5rem;font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.1rem,2.5vw,1.7rem);font-weight:300;font-style:italic;color:var(--gray-light);letter-spacing:0.04em;line-height:1.4}
+  .hero-subtitle strong{color:var(--gold);font-weight:600;font-style:normal}
+  .hero-divider{width:80px;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));margin:1.5rem auto;border-radius:2px}
+  .hero-cta{display:inline-flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;justify-content:center}
+  .btn-primary{background:var(--red);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.75em 2em;border:none;border-radius:3px;cursor:pointer;text-decoration:none;transition:background 0.2s,transform 0.15s;display:inline-block}
+  .btn-primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+  .btn-secondary{background:transparent;color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.75em 2em;border:1px solid rgba(201,168,76,0.5);border-radius:3px;cursor:pointer;text-decoration:none;transition:border-color 0.2s,color 0.2s;display:inline-block}
+  .btn-secondary:hover{border-color:var(--gold);color:var(--gold-light)}
+
+  section{padding:6rem 2rem;max-width:1100px;margin:0 auto}
+  .section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem}
+  .section-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);text-transform:uppercase;line-height:1;color:var(--white);letter-spacing:0.01em}
+  .section-title .gold{color:var(--gold)}
+  .section-sep{width:50px;height:3px;background:var(--red);margin:1rem 0 2.5rem;border-radius:2px}
+
+  #stats-strip{background:var(--dark2);border-top:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1);padding:0}
+  .stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat-item{padding:2rem 2.5rem;border-right:1px solid rgba(255,255,255,0.06);text-align:center}
+  .stat-item:last-child{border-right:none}
+  .stat-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.8rem;color:var(--gold);line-height:1;letter-spacing:-0.02em}
+  .stat-label{font-size:0.72rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);margin-top:0.3rem}
+
+  #panel{padding-top:2rem}
+  .panel-tabs{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:2rem;flex-wrap:wrap}
+  .tab-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.8rem 1.8rem;background:transparent;color:var(--gray);border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color 0.2s,border-color 0.2s;margin-bottom:-1px}
+  .tab-btn.active{color:var(--red);border-bottom-color:var(--red)}
+  .tab-btn:hover:not(.active){color:var(--gray-light)}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:1.5rem}
+  .form-group{display:flex;flex-direction:column;gap:6px}
+  .form-group label{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray)}
+  .form-group input,.form-group select,.form-group textarea{background:var(--dark2);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-family:'Barlow',sans-serif;font-size:0.95rem;padding:0.65rem 0.9rem;transition:border-color 0.2s;outline:none;-webkit-appearance:none}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(201,168,76,0.5)}
+  .form-group select option{background:var(--dark2)}
+  .form-group textarea{resize:vertical;min-height:80px}
+  .form-row-type{display:flex;gap:0.5rem;flex-wrap:wrap}
+  .type-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 1.1rem;background:transparent;color:var(--gray-light);border:1px solid rgba(255,255,255,0.12);border-radius:3px;cursor:pointer;transition:all 0.2s}
+  .type-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
+  .type-btn:hover:not(.active){border-color:rgba(255,255,255,0.3);color:var(--white)}
+  .form-submit-area{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1rem}
+  #status-msg{font-size:0.85rem;color:var(--gold);display:none}
+  #status-msg.error{color:#ff6b6b}
+
+  .history-filters{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+  .history-filters select,.history-filters input{background:var(--dark2);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-family:'Barlow',sans-serif;font-size:0.85rem;padding:0.5rem 0.8rem;outline:none}
+  .history-filters select option{background:var(--dark2)}
+
+  .record-card{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-left:3px solid var(--red);border-radius:6px;padding:1.2rem 1.5rem;margin-bottom:1rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem 2rem;align-items:start;transition:border-color 0.2s}
+  .record-card:hover{border-left-color:var(--gold)}
+  .record-card.competencia{border-left-color:var(--gold)}
+  .record-date{text-align:center;min-width:56px}
+  .record-date .day{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--red);line-height:1}
+  .record-card.competencia .record-date .day{color:var(--gold)}
+  .record-date .month{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray)}
+  .record-header{display:flex;align-items:baseline;gap:0.6rem;flex-wrap:wrap;margin-bottom:0.3rem}
+  .record-circuit{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);letter-spacing:0.02em}
+  .record-type-badge{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:2px;background:rgba(232,0,13,0.2);color:var(--red)}
+  .record-card.competencia .record-type-badge{background:rgba(201,168,76,0.2);color:var(--gold)}
+  .record-meta{display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.6rem}
+  .record-meta-item{display:flex;flex-direction:column;gap:1px}
+  .record-meta-item .label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray)}
+  .record-meta-item .value{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:600;color:var(--text)}
+  .record-meta-item .value.highlight{color:var(--gold)}
+  .record-side{text-align:right;min-width:60px}
+  .pos-badge{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.8rem;line-height:1;display:inline-block}
+  .pos-badge.pos-1{color:var(--gold)}.pos-badge.pos-2{color:#C0C0C0}.pos-badge.pos-3{color:#CD7F32}.pos-badge.pos-other{color:var(--gray-light)}
+  .pos-sup{font-size:0.7rem;font-weight:600;vertical-align:super;color:var(--gray)}
+  .record-notes{font-size:0.85rem;color:var(--gray);font-style:italic;margin-top:0.4rem}
+  .empty-state{text-align:center;padding:4rem 2rem;color:var(--gray)}
+  .empty-state p{font-size:0.9rem}
+  .loading-state{text-align:center;padding:3rem;color:var(--gray);font-size:0.9rem}
+
+  .circuit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+  .circuit-card{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:1.2rem 1.5rem;transition:border-color 0.2s,transform 0.2s}
+  .circuit-card:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-2px)}
+  .circuit-card-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.15rem;color:var(--white);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:0.4rem}
+  .circuit-card-stats{display:flex;gap:1.5rem}
+  .circuit-stat{display:flex;flex-direction:column;gap:1px}
+  .circuit-stat .label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray)}
+  .circuit-stat .value{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--text)}
+
+  .maint-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:1.5rem}
+  .priority-btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.45rem 1rem;background:transparent;border:1px solid rgba(255,255,255,0.12);border-radius:3px;cursor:pointer;transition:all 0.2s;color:var(--gray-light)}
+  .priority-btn.active-low{background:rgba(30,180,80,0.18);color:#4ade80;border-color:#4ade80}
+  .priority-btn.active-med{background:rgba(250,170,0,0.18);color:var(--gold-light);border-color:var(--gold)}
+  .priority-btn.active-high{background:rgba(232,0,13,0.18);color:#ff6b6b;border-color:var(--red)}
+  .priority-btn:hover:not(.active-low):not(.active-med):not(.active-high){border-color:rgba(255,255,255,0.3);color:var(--white)}
+  .maint-record{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-left:3px solid #4ade80;border-radius:6px;padding:1rem 1.4rem;margin-bottom:0.8rem;display:grid;grid-template-columns:auto 1fr auto;gap:0.8rem 1.5rem;align-items:start}
+  .maint-record.prioridad-Media{border-left-color:var(--gold)}
+  .maint-record.prioridad-Alta{border-left-color:var(--red)}
+  .maint-record.estado-Resuelto{opacity:0.55}
+  .maint-date{text-align:center;min-width:50px}
+  .maint-date .day{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.7rem;color:#4ade80;line-height:1}
+  .maint-record.prioridad-Media .maint-date .day{color:var(--gold)}
+  .maint-record.prioridad-Alta .maint-date .day{color:var(--red)}
+  .maint-date .mon{font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray)}
+  .maint-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.1rem;color:var(--white);letter-spacing:0.02em}
+  .maint-part{font-size:0.8rem;color:var(--gold);font-weight:600;margin:2px 0 4px}
+  .maint-desc{font-size:0.85rem;color:var(--gray-light);line-height:1.5}
+  .maint-cost{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;color:var(--text);white-space:nowrap}
+  .estado-pill{display:inline-block;font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;margin-top:4px}
+  .estado-Pendiente{background:rgba(232,0,13,0.18);color:#ff6b6b}
+  .estado-En-proceso{background:rgba(250,170,0,0.18);color:var(--gold-light)}
+  .estado-Resuelto{background:rgba(30,180,80,0.18);color:#4ade80}
+  .maint-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+  .maint-summary-card{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:1rem 1.2rem;text-align:center}
+  .maint-summary-card .val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;line-height:1}
+  .maint-summary-card .lbl{font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-top:3px}
+
+  #federico{position:relative;overflow:hidden}
+  .federico-bg{position:absolute;right:0;top:0;bottom:0;width:50%;background:linear-gradient(to left,rgba(201,168,76,0.04),transparent);pointer-events:none}
+  .federico-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+  .federico-badge-container{display:flex;flex-direction:column;align-items:flex-start;gap:1rem}
+  .racer-initials{width:120px;height:120px;border:2px solid rgba(201,168,76,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.5rem;color:var(--gold);background:rgba(201,168,76,0.06);letter-spacing:0.05em}
+  .racer-role{font-size:0.7rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:-0.5rem}
+  .racer-name-big{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2.8rem;color:var(--white);text-transform:uppercase;letter-spacing:0.02em;line-height:1}
+  .achievements-list{list-style:none;margin-top:1rem}
+  .achievements-list li{display:flex;align-items:baseline;gap:0.7rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.9rem;color:var(--gray-light)}
+  .achievements-list li::before{content:'▸';color:var(--gold);font-size:0.7rem;flex-shrink:0}
+  .federico-bio{font-size:0.95rem;line-height:1.8;color:var(--gray-light)}
+  .federico-bio p{margin-bottom:1rem}
+  .bio-highlight{color:var(--gold);font-weight:600}
+  .legacy-quote{margin-top:2rem;padding:1.2rem 1.5rem;border-left:3px solid var(--gold);background:rgba(201,168,76,0.05);border-radius:0 4px 4px 0;font-size:1rem;font-style:italic;color:var(--text);line-height:1.7}
+
+  #sponsor{text-align:center;padding:4rem 2rem;background:var(--dark2);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);max-width:100%;margin:0}
+  .sponsor-eyebrow{font-size:0.68rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gray);margin-bottom:1.2rem}
+  .sponsor-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(2.5rem,7vw,5rem);text-transform:uppercase;letter-spacing:0.06em;color:var(--white)}
+  .sponsor-name .srl{color:var(--red);font-size:0.5em;vertical-align:super}
+  .sponsor-desc{margin-top:0.8rem;font-size:0.85rem;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase}
+
+  footer{background:var(--black);border-top:1px solid rgba(255,255,255,0.04);padding:2rem;text-align:center;max-width:100%}
+  footer p{font-size:0.78rem;color:var(--gray);letter-spacing:0.06em}
+  footer strong{color:var(--gold)}
+
+  @media(max-width:768px){
+    nav{padding:0 1rem}
+    .nav-links{display:none}
+    .stats-inner{grid-template-columns:repeat(2,1fr)}
+    .federico-layout{grid-template-columns:1fr;gap:2rem}
+    .record-card,.maint-record{grid-template-columns:1fr}
+    .record-side{display:none}
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ──── NAV ──── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem;
-    height: 64px;
-  }
-  .nav-logo {
-    font-family: 'Racing Sans One', sans-serif;
-    font-size: 1.5rem;
-    color: var(--gold);
-    letter-spacing: 0.04em;
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--red); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    color: var(--gray-light);
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-sponsor {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-    border: 1px solid rgba(201,168,76,0.3);
-    padding: 5px 14px;
-    border-radius: 3px;
-  }
-  .nav-sponsor span { color: var(--gold); }
-
-  /* ──── HERO ──── */
-  #hero {
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding-top: 64px;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,0,13,0.07) 0%, transparent 70%),
-      repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 40px,
-        rgba(201,168,76,0.018) 40px,
-        rgba(201,168,76,0.018) 41px
-      );
-  }
-  .hero-number {
-    position: absolute;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(14rem, 30vw, 32rem);
-    color: rgba(232,0,13,0.055);
-    line-height: 1;
-    right: -2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    letter-spacing: -0.04em;
-    user-select: none;
-    pointer-events: none;
-  }
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 860px;
-    padding: 2rem;
-  }
-  .hero-tag {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid rgba(201,168,76,0.4);
-    padding: 5px 16px;
-    border-radius: 2px;
-    margin-bottom: 1.5rem;
-  }
-  .hero-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(5rem, 14vw, 11rem);
-    line-height: 0.88;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    color: var(--white);
-  }
-  .hero-name .accent { color: var(--red); }
-  .hero-number-badge {
-    display: inline-block;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: var(--gold);
-    background: var(--red);
-    padding: 0.1em 0.4em;
-    margin-left: 0.2em;
-    border-radius: 3px;
-    vertical-align: middle;
-    line-height: 1.1;
-  }
-  .hero-subtitle {
-    margin-top: 1.5rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.1rem, 2.5vw, 1.7rem);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--gray-light);
-    letter-spacing: 0.04em;
-    line-height: 1.4;
-  }
-  .hero-subtitle strong {
-    color: var(--gold);
-    font-weight: 600;
-    font-style: normal;
-  }
-  .hero-divider {
-    width: 80px; height: 3px;
-    background: linear-gradient(90deg, var(--red), var(--gold));
-    margin: 1.5rem auto;
-    border-radius: 2px;
-  }
-  .hero-cta {
-    display: inline-flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; justify-content: center;
-  }
-  .btn-primary {
-    background: var(--red);
-    color: #fff;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.75em 2em;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
-  .btn-secondary {
-    background: transparent;
-    color: var(--gold);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.75em 2em;
-    border: 1px solid rgba(201,168,76,0.5);
-    border-radius: 3px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
-
-  /* ──── SECTIONS ──── */
-  section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
-  .section-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 0.5rem;
-  }
-  .section-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    text-transform: uppercase;
-    line-height: 1;
-    color: var(--white);
-    letter-spacing: 0.01em;
-  }
-  .section-title .gold { color: var(--gold); }
-  .section-sep {
-    width: 50px; height: 3px;
-    background: var(--red);
-    margin: 1rem 0 2.5rem;
-    border-radius: 2px;
-  }
-
-  /* ──── STATS STRIP ──── */
-  #stats-strip {
-    background: var(--dark2);
-    border-top: 1px solid rgba(201,168,76,0.1);
-    border-bottom: 1px solid rgba(201,168,76,0.1);
-    padding: 0;
-  }
-  .stats-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    divide-x: var(--dark4);
-  }
-  .stat-item {
-    padding: 2rem 2.5rem;
-    border-right: 1px solid rgba(255,255,255,0.06);
-    text-align: center;
-  }
-  .stat-item:last-child { border-right: none; }
-  .stat-value {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 2.8rem;
-    color: var(--gold);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .stat-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-top: 0.3rem;
-  }
-
-  /* ──── PANEL ──── */
-  #panel { padding-top: 2rem; }
-  .panel-tabs {
-    display: flex; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 2rem;
-  }
-  .tab-btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.8rem 1.8rem;
-    background: transparent;
-    color: var(--gray);
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
-    margin-bottom: -1px;
-  }
-  .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
-  .tab-btn:hover:not(.active) { color: var(--gray-light); }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-
-  /* Form */
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray);
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 4px;
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.95rem;
-    padding: 0.65rem 0.9rem;
-    transition: border-color 0.2s;
-    outline: none;
-    -webkit-appearance: none;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: rgba(201,168,76,0.5);
-  }
-  .form-group select option { background: var(--dark2); }
-  .form-group textarea { resize: vertical; min-height: 80px; }
-  .form-row-type {
-    display: flex; gap: 0.5rem; flex-wrap: wrap;
-  }
-  .type-btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.5rem 1.1rem;
-    background: transparent;
-    color: var(--gray-light);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .type-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
-  .type-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: var(--white); }
-
-  /* Submit area */
-  .form-submit-area {
-    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-    margin-top: 1rem;
-  }
-  #status-msg {
-    font-size: 0.85rem;
-    color: var(--gold);
-    display: none;
-  }
-  #status-msg.error { color: #ff6b6b; }
-
-  /* Historial */
-  .history-filters {
-    display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
-    align-items: center;
-  }
-  .history-filters select,
-  .history-filters input {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 4px;
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.85rem;
-    padding: 0.5rem 0.8rem;
-    outline: none;
-  }
-  .history-filters select option { background: var(--dark2); }
-
-  .record-card {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-left: 3px solid var(--red);
-    border-radius: 6px;
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1rem 2rem;
-    align-items: start;
-    transition: border-color 0.2s;
-  }
-  .record-card:hover { border-left-color: var(--gold); }
-  .record-card.competencia { border-left-color: var(--gold); }
-  .record-date {
-    text-align: center;
-    min-width: 56px;
-  }
-  .record-date .day {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 2rem;
-    color: var(--red);
-    line-height: 1;
-  }
-  .record-card.competencia .record-date .day { color: var(--gold); }
-  .record-date .month {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-  }
-  .record-main {}
-  .record-header {
-    display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.3rem;
-  }
-  .record-circuit {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--white);
-    letter-spacing: 0.02em;
-  }
-  .record-type-badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 2px;
-    background: rgba(232,0,13,0.2);
-    color: var(--red);
-  }
-  .record-card.competencia .record-type-badge {
-    background: rgba(201,168,76,0.2);
-    color: var(--gold);
-  }
-  .record-meta {
-    display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.6rem;
-  }
-  .record-meta-item {
-    display: flex; flex-direction: column; gap: 1px;
-  }
-  .record-meta-item .label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-  }
-  .record-meta-item .value {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .record-meta-item .value.highlight {
-    color: var(--gold);
-  }
-  .record-side { text-align: right; min-width: 60px; }
-  .pos-badge {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 1.8rem;
-    line-height: 1;
-    display: inline-block;
-  }
-  .pos-badge.pos-1 { color: var(--gold); }
-  .pos-badge.pos-2 { color: #C0C0C0; }
-  .pos-badge.pos-3 { color: #CD7F32; }
-  .pos-badge.pos-other { color: var(--gray-light); }
-  .pos-sup {
-    font-size: 0.7rem;
-    font-weight: 600;
-    vertical-align: super;
-    color: var(--gray);
-  }
-  .record-notes {
-    font-size: 0.85rem;
-    color: var(--gray);
-    font-style: italic;
-    margin-top: 0.4rem;
-  }
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--gray);
-  }
-  .empty-state svg { opacity: 0.2; margin-bottom: 1rem; }
-  .empty-state p { font-size: 0.9rem; }
-  .loading-state {
-    text-align: center;
-    padding: 3rem;
-    color: var(--gray);
-    font-size: 0.9rem;
-  }
-
-  /* Circuitos */
-  .circuit-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
-  }
-  .circuit-card {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 6px;
-    padding: 1.2rem 1.5rem;
-    cursor: pointer;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .circuit-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); }
-  .circuit-card-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 1.15rem;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    margin-bottom: 0.4rem;
-  }
-  .circuit-card-stats {
-    display: flex; gap: 1.5rem;
-  }
-  .circuit-stat {
-    display: flex; flex-direction: column; gap: 1px;
-  }
-  .circuit-stat .label {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray);
-  }
-  .circuit-stat .value {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--text);
-  }
-
-  /* ──── FEDERICO ──── */
-  #federico {
-    position: relative;
-    overflow: hidden;
-  }
-  .federico-bg {
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 50%;
-    background: linear-gradient(to left, rgba(201,168,76,0.04), transparent);
-    pointer-events: none;
-  }
-  .federico-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .federico-badge-container {
-    display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;
-  }
-  .racer-initials {
-    width: 120px; height: 120px;
-    border: 2px solid rgba(201,168,76,0.4);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 2.5rem;
-    color: var(--gold);
-    background: rgba(201,168,76,0.06);
-    letter-spacing: 0.05em;
-  }
-  .racer-role {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: -0.5rem;
-  }
-  .racer-name-big {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 2.8rem;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    line-height: 1;
-  }
-  .achievements-list {
-    list-style: none;
-    margin-top: 1rem;
-  }
-  .achievements-list li {
-    display: flex; align-items: baseline; gap: 0.7rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    font-size: 0.9rem;
-    color: var(--gray-light);
-  }
-  .achievements-list li::before {
-    content: '▸';
-    color: var(--gold);
-    font-size: 0.7rem;
-    flex-shrink: 0;
-  }
-  .federico-bio {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: var(--gray-light);
-  }
-  .federico-bio p { margin-bottom: 1rem; }
-  .federico-bio p:last-child { margin-bottom: 0; }
-  .bio-highlight {
-    color: var(--gold);
-    font-weight: 600;
-  }
-  .legacy-quote {
-    margin-top: 2rem;
-    padding: 1.2rem 1.5rem;
-    border-left: 3px solid var(--gold);
-    background: rgba(201,168,76,0.05);
-    border-radius: 0 4px 4px 0;
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--text);
-    line-height: 1.7;
-  }
-
-  /* ──── MANTENIMIENTO ──── */
-  .maint-form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-  .priority-btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.45rem 1rem;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--gray-light);
-  }
-  .priority-btn.active-low { background: rgba(30,180,80,0.18); color: #4ade80; border-color: #4ade80; }
-  .priority-btn.active-med { background: rgba(250,170,0,0.18); color: var(--gold-light); border-color: var(--gold); }
-  .priority-btn.active-high { background: rgba(232,0,13,0.18); color: #ff6b6b; border-color: var(--red); }
-  .priority-btn:hover:not(.active-low):not(.active-med):not(.active-high) { border-color: rgba(255,255,255,0.3); color: var(--white); }
-
-  .maint-record {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-left: 3px solid #4ade80;
-    border-radius: 6px;
-    padding: 1rem 1.4rem;
-    margin-bottom: 0.8rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 0.8rem 1.5rem;
-    align-items: start;
-  }
-  .maint-record.prioridad-Media { border-left-color: var(--gold); }
-  .maint-record.prioridad-Alta { border-left-color: var(--red); }
-  .maint-record.estado-Resuelto { opacity: 0.55; }
-  .maint-date { text-align: center; min-width: 50px; }
-  .maint-date .day { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.7rem; color: #4ade80; line-height: 1; }
-  .maint-record.prioridad-Media .maint-date .day { color: var(--gold); }
-  .maint-record.prioridad-Alta .maint-date .day { color: var(--red); }
-  .maint-date .mon { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); }
-  .maint-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--white); letter-spacing: 0.02em; }
-  .maint-part { font-size: 0.8rem; color: var(--gold); font-weight: 600; margin: 2px 0 4px; }
-  .maint-desc { font-size: 0.85rem; color: var(--gray-light); line-height: 1.5; }
-  .maint-cost { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); white-space: nowrap; }
-  .estado-pill {
-    display: inline-block;
-    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 2px 8px; border-radius: 2px; margin-top: 4px;
-  }
-  .estado-Pendiente { background: rgba(232,0,13,0.18); color: #ff6b6b; }
-  .estado-En-proceso { background: rgba(250,170,0,0.18); color: var(--gold-light); }
-  .estado-Resuelto { background: rgba(30,180,80,0.18); color: #4ade80; }
-
-  .maint-summary-grid {
-    display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 2rem;
-  }
-  .maint-summary-card {
-    background: var(--dark2); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;
-    padding: 1rem 1.2rem; text-align: center;
-  }
-  .maint-summary-card .val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2rem; line-height: 1; }
-  .maint-summary-card .lbl { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-top: 3px; }
-
-  /* ──── SPONSOR ──── */
-  #sponsor {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: var(--dark2);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    max-width: 100%;
-    margin: 0;
-  }
-  .sponsor-eyebrow {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gray);
-    margin-bottom: 1.2rem;
-  }
-  .sponsor-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--white);
-  }
-  .sponsor-name .srl {
-    color: var(--red);
-    font-size: 0.5em;
-    vertical-align: super;
-  }
-  .sponsor-desc {
-    margin-top: 0.8rem;
-    font-size: 0.85rem;
-    color: var(--gray);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  /* ──── FOOTER ──── */
-  footer {
-    background: var(--black);
-    border-top: 1px solid rgba(255,255,255,0.04);
-    padding: 2rem;
-    text-align: center;
-    max-width: 100%;
-  }
-  footer p {
-    font-size: 0.78rem;
-    color: var(--gray);
-    letter-spacing: 0.06em;
-  }
-  footer strong { color: var(--gold); }
-
-  /* ──── SUPABASE CONFIG MODAL ──── */
-  .config-overlay {
-    display: none;
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,0.85);
-    align-items: center; justify-content: center;
-  }
-  .config-overlay.show { display: flex; }
-  .config-modal {
-    background: var(--dark2);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 8px;
-    padding: 2rem 2.5rem;
-    max-width: 480px;
-    width: 100%;
-    margin: 1rem;
-  }
-  .config-modal h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: var(--white);
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-  }
-  .config-modal p {
-    font-size: 0.85rem;
-    color: var(--gray);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-  }
-  .config-modal a { color: var(--gold); }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    nav { padding: 0 1rem; }
-    .nav-links { display: none; }
-    .stats-inner { grid-template-columns: repeat(2, 1fr); }
-    .federico-layout { grid-template-columns: 1fr; gap: 2rem; }
-    .record-card { grid-template-columns: 1fr; }
-    .record-side { display: none; }
-  }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up { animation: fadeUp 0.6s ease both; }
-  .delay-1 { animation-delay: 0.15s; }
-  .delay-2 { animation-delay: 0.3s; }
-  .delay-3 { animation-delay: 0.45s; }
-  .delay-4 { animation-delay: 0.6s; }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--black); }
-  ::-webkit-scrollbar-thumb { background: var(--dark4); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{animation:fadeUp 0.6s ease both}
+  .delay-1{animation-delay:0.15s}.delay-2{animation-delay:0.3s}.delay-3{animation-delay:0.45s}.delay-4{animation-delay:0.6s}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--black)}::-webkit-scrollbar-thumb{background:var(--dark4);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--gray)}
 </style>
 </head>
 <body>
 
-<!-- ── CONFIG OVERLAY ── -->
-<div class="config-overlay" id="configOverlay">
-  <div class="config-modal">
-    <h2>⚙ Configurar Supabase</h2>
-    <p>Ingresá las credenciales de tu proyecto Supabase para activar la base de datos. <a href="https://supabase.com/dashboard" target="_blank">Ir al dashboard →</a></p>
-    <div class="form-group" style="margin-bottom:1rem">
-      <label>Supabase URL</label>
-      <input type="text" id="cfgUrl" placeholder="https://xxxxxxxxxxxx.supabase.co" />
-    </div>
-    <div class="form-group" style="margin-bottom:1.5rem">
-      <label>Anon Key (pública)</label>
-      <input type="text" id="cfgKey" placeholder="eyJhbGc..." />
-    </div>
-    <div style="display:flex;gap:0.8rem;flex-wrap:wrap">
-      <button class="btn-primary" onclick="saveConfig()">Guardar y conectar</button>
-      <button class="btn-secondary" onclick="useLocalMode()">Usar modo local</button>
-    </div>
-    <p id="configError" style="color:#ff6b6b;font-size:0.8rem;margin-top:0.8rem;display:none"></p>
-  </div>
-</div>
-
-<!-- ── NAV ── -->
 <nav>
   <a class="nav-logo" href="#hero">BENJA <span>#95</span></a>
   <ul class="nav-links">
     <li><a href="#panel">Panel</a></li>
-    <li><a href="#historial-tab">Historial</a></li>
-    <li><a href="#mantenimiento-section">Mantenimiento</a></li>
+    <li><a href="#panel">Historial</a></li>
+    <li><a href="#panel">Mantenimiento</a></li>
     <li><a href="#federico">Federico</a></li>
     <li><a href="#sponsor">Sponsor</a></li>
   </ul>
   <div class="nav-sponsor">Sponsor: <span>BolsaPlast</span></div>
 </nav>
 
-<!-- ── HERO ── -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-number">95</div>
   <div class="hero-content">
-    <div class="hero-tag fade-up">🏁 Karting — Temporada 2026</div>
-    <div class="hero-name fade-up delay-1">
-      BENJA<span class="hero-number-badge">#95</span>
-    </div>
+    <div class="hero-tag fade-up">🏁 Karting — Temporada 2025</div>
+    <div class="hero-name fade-up delay-1">BENJA<span class="hero-number-badge">#95</span></div>
     <div class="hero-divider fade-up delay-2"></div>
-    <div class="hero-subtitle fade-up delay-2">
-      La nueva ilusión de la familia en las carreras.<br>
-      <strong>El gen de la velocidad no descansa.</strong>
-    </div>
-    <p class="fade-up delay-3" style="font-size:0.85rem;color:var(--gray);margin-top:1rem;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto;">
-      Hijo de Federico Gartner, excorredor de motos a nivel mundial, Benjamín hereda la pasión por la velocidad y escribe su propio capítulo en el mundo del motor.
-    </p>
+    <div class="hero-subtitle fade-up delay-2">La nueva ilusión de la familia en las carreras.<br><strong>El gen de la velocidad no descansa.</strong></div>
+    <p class="fade-up delay-3" style="font-size:0.85rem;color:var(--gray);margin-top:1rem;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto;">Hijo de Federico Gartner, excorredor de motos a nivel mundial, Benjamín hereda la pasión por la velocidad y escribe su propio capítulo en el mundo del motor.</p>
     <div class="hero-cta fade-up delay-4">
       <a class="btn-primary" href="#panel">Ver panel</a>
       <a class="btn-secondary" href="#federico">Historia familiar</a>
@@ -884,42 +214,26 @@
   </div>
 </section>
 
-<!-- ── STATS STRIP ── -->
 <div id="stats-strip">
   <div class="stats-inner">
-    <div class="stat-item">
-      <div class="stat-value" id="stat-sesiones">—</div>
-      <div class="stat-label">Sesiones totales</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value" id="stat-circuitos">—</div>
-      <div class="stat-label">Circuitos</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value" id="stat-mejor">—</div>
-      <div class="stat-label">Mejor vuelta registrada</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value" id="stat-podios">—</div>
-      <div class="stat-label">Podios</div>
-    </div>
+    <div class="stat-item"><div class="stat-value" id="stat-sesiones">—</div><div class="stat-label">Sesiones totales</div></div>
+    <div class="stat-item"><div class="stat-value" id="stat-circuitos">—</div><div class="stat-label">Circuitos</div></div>
+    <div class="stat-item"><div class="stat-value" id="stat-mejor">—</div><div class="stat-label">Mejor vuelta registrada</div></div>
+    <div class="stat-item"><div class="stat-value" id="stat-podios">—</div><div class="stat-label">Podios</div></div>
   </div>
 </div>
 
-<!-- ── PANEL ── -->
 <section id="panel">
   <div class="section-label">Panel de datos</div>
   <div class="section-title">RENDIMIENTO <span class="gold">EN PISTA</span></div>
   <div class="section-sep"></div>
-
   <div class="panel-tabs">
-    <button class="tab-btn active" onclick="switchTab('registrar')">+ Registrar sesión</button>
-    <button class="tab-btn" id="historial-tab" onclick="switchTab('historial')">Historial</button>
-    <button class="tab-btn" onclick="switchTab('circuitos')">Circuitos</button>
-    <button class="tab-btn" onclick="switchTab('mantenimiento')">🔩 Mantenimiento</button>
+    <button class="tab-btn active" onclick="switchTab(event,'registrar')">+ Registrar sesión</button>
+    <button class="tab-btn" onclick="switchTab(event,'historial')">Historial</button>
+    <button class="tab-btn" onclick="switchTab(event,'circuitos')">Circuitos</button>
+    <button class="tab-btn" onclick="switchTab(event,'mantenimiento')">🔩 Mantenimiento</button>
   </div>
 
-  <!-- TAB: REGISTRAR -->
   <div class="tab-content active" id="tab-registrar">
     <div style="margin-bottom:1.5rem">
       <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.6rem">Tipo de sesión</div>
@@ -930,49 +244,20 @@
         <button class="type-btn" data-type="Entrenamiento" onclick="setType(this)">📋 Entrenamiento</button>
       </div>
     </div>
-
     <div class="form-grid">
-      <div class="form-group" style="grid-column: span 2;">
-        <label>Circuito *</label>
-        <input type="text" id="f-circuit" placeholder="Ej: Kartódromo Posadas" list="circuit-list" />
-        <datalist id="circuit-list"></datalist>
-      </div>
-      <div class="form-group">
-        <label>Fecha *</label>
-        <input type="date" id="f-date" />
-      </div>
-      <div class="form-group">
-        <label>Posición final</label>
-        <input type="number" id="f-pos" placeholder="Ej: 3" min="1" max="99" />
-      </div>
+      <div class="form-group" style="grid-column:span 2"><label>Circuito *</label><input type="text" id="f-circuit" placeholder="Ej: Kartódromo Posadas" list="circuit-list" /><datalist id="circuit-list"></datalist></div>
+      <div class="form-group"><label>Fecha *</label><input type="date" id="f-date" /></div>
+      <div class="form-group"><label>Posición final</label><input type="number" id="f-pos" placeholder="Ej: 3" min="1" max="99" /></div>
     </div>
-
     <div class="form-grid">
-      <div class="form-group">
-        <label>Tiempo total (mm:ss.ms)</label>
-        <input type="text" id="f-total" placeholder="Ej: 18:32.450" pattern="\d{1,2}:\d{2}\.\d{3}" />
-      </div>
-      <div class="form-group">
-        <label>Mejor vuelta (ss.ms)</label>
-        <input type="text" id="f-best" placeholder="Ej: 52.340" />
-      </div>
-      <div class="form-group">
-        <label>Peor vuelta (ss.ms)</label>
-        <input type="text" id="f-worst" placeholder="Ej: 55.120" />
-      </div>
-      <div class="form-group">
-        <label>Cantidad de vueltas</label>
-        <input type="number" id="f-laps" placeholder="Ej: 20" min="1" />
-      </div>
+      <div class="form-group"><label>Tiempo total (mm:ss.ms)</label><input type="text" id="f-total" placeholder="Ej: 18:32.450" /></div>
+      <div class="form-group"><label>Mejor vuelta (ss.ms)</label><input type="text" id="f-best" placeholder="Ej: 52.340" /></div>
+      <div class="form-group"><label>Peor vuelta (ss.ms)</label><input type="text" id="f-worst" placeholder="Ej: 55.120" /></div>
+      <div class="form-group"><label>Cantidad de vueltas</label><input type="number" id="f-laps" placeholder="Ej: 20" min="1" /></div>
     </div>
-
     <div class="form-grid">
-      <div class="form-group">
-        <label>Temperatura (°C)</label>
-        <input type="number" id="f-temp" placeholder="Ej: 28" min="-10" max="50" />
-      </div>
-      <div class="form-group">
-        <label>Condición climática</label>
+      <div class="form-group"><label>Temperatura (°C)</label><input type="number" id="f-temp" placeholder="Ej: 28" /></div>
+      <div class="form-group"><label>Condición climática</label>
         <select id="f-clima">
           <option value="">Seleccioná...</option>
           <option value="Soleado ☀️">Soleado ☀️</option>
@@ -983,12 +268,8 @@
           <option value="Viento fuerte 💨">Viento fuerte 💨</option>
         </select>
       </div>
-      <div class="form-group" style="grid-column: span 2;">
-        <label>Notas / Observaciones</label>
-        <textarea id="f-notes" placeholder="Setup del kart, observaciones, sensaciones del piloto..."></textarea>
-      </div>
+      <div class="form-group" style="grid-column:span 2"><label>Notas / Observaciones</label><textarea id="f-notes" placeholder="Setup del kart, observaciones, sensaciones del piloto..."></textarea></div>
     </div>
-
     <div class="form-submit-area">
       <button class="btn-primary" onclick="submitSession()">Guardar sesión</button>
       <button class="btn-secondary" onclick="clearForm()">Limpiar</button>
@@ -996,7 +277,6 @@
     </div>
   </div>
 
-  <!-- TAB: HISTORIAL -->
   <div class="tab-content" id="tab-historial">
     <div class="history-filters">
       <select id="filt-type" onchange="loadHistory()">
@@ -1011,120 +291,80 @@
         <option value="">Todos los años</option>
         <option value="2025">2025</option>
         <option value="2026">2026</option>
+        <option value="2027">2027</option>
       </select>
     </div>
-    <div id="history-container">
-      <div class="loading-state">Cargando historial...</div>
-    </div>
+    <div id="history-container"><div class="loading-state">Cargando historial...</div></div>
   </div>
 
-  <!-- TAB: CIRCUITOS -->
   <div class="tab-content" id="tab-circuitos">
-    <div id="circuits-container">
-      <div class="loading-state">Cargando circuitos...</div>
-    </div>
+    <div id="circuits-container"><div class="loading-state">Cargando circuitos...</div></div>
   </div>
 
-  <!-- TAB: MANTENIMIENTO -->
   <div class="tab-content" id="tab-mantenimiento">
-    <div class="maint-summary-grid" id="maint-summary">
+    <div class="maint-summary-grid">
       <div class="maint-summary-card"><div class="val" id="ms-total" style="color:var(--gold)">—</div><div class="lbl">Registros totales</div></div>
       <div class="maint-summary-card"><div class="val" id="ms-pendientes" style="color:#ff6b6b">—</div><div class="lbl">Pendientes / En proceso</div></div>
       <div class="maint-summary-card"><div class="val" id="ms-costo" style="color:#4ade80">—</div><div class="lbl">Costo total registrado</div></div>
     </div>
-
     <div style="background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:1.5rem;margin-bottom:2rem">
       <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem">+ Nuevo registro de mantenimiento</div>
-
       <div class="maint-form-grid">
-        <div class="form-group" style="grid-column:span 2">
-          <label>Parte / componente *</label>
-          <input type="text" id="m-part" placeholder="Ej: Motor, Cadena, Frenos traseros, Carburador..." />
-        </div>
-        <div class="form-group">
-          <label>Fecha *</label>
-          <input type="date" id="m-date" />
-        </div>
-        <div class="form-group">
-          <label>Costo (ARS)</label>
-          <input type="number" id="m-cost" placeholder="Ej: 15000" min="0" />
-        </div>
+        <div class="form-group" style="grid-column:span 2"><label>Parte / componente *</label><input type="text" id="m-part" placeholder="Ej: Motor, Cadena, Frenos traseros, Carburador..." /></div>
+        <div class="form-group"><label>Fecha *</label><input type="date" id="m-date" /></div>
+        <div class="form-group"><label>Costo (ARS)</label><input type="number" id="m-cost" placeholder="Ej: 15000" min="0" /></div>
       </div>
-
       <div class="maint-form-grid">
-        <div class="form-group" style="grid-column:span 2">
-          <label>Descripción del trabajo *</label>
-          <textarea id="m-desc" placeholder="Qué se hizo, por qué, qué se reemplazó..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>Taller / Responsable</label>
-          <input type="text" id="m-taller" placeholder="Ej: Taller Rodríguez, Federico" />
-        </div>
-        <div class="form-group">
-          <label>Kilometraje / Hs motor</label>
-          <input type="text" id="m-km" placeholder="Ej: 12hs motor" />
-        </div>
+        <div class="form-group" style="grid-column:span 2"><label>Descripción del trabajo</label><textarea id="m-desc" placeholder="Qué se hizo, por qué, qué se reemplazó..."></textarea></div>
+        <div class="form-group"><label>Taller / Responsable</label><input type="text" id="m-taller" placeholder="Ej: Taller Rodríguez, Federico" /></div>
+        <div class="form-group"><label>Hs motor / Kilometraje</label><input type="text" id="m-km" placeholder="Ej: 12hs motor" /></div>
       </div>
-
       <div style="margin-bottom:1.2rem">
         <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem">Prioridad</div>
-        <div style="display:flex;gap:0.5rem">
-          <button class="priority-btn active-low" id="pb-low" data-p="Baja" onclick="setPriority(this)">● Baja</button>
-          <button class="priority-btn" id="pb-med" data-p="Media" onclick="setPriority(this)">● Media</button>
-          <button class="priority-btn" id="pb-high" data-p="Alta" onclick="setPriority(this)">● Alta</button>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <button class="priority-btn active-low" data-p="Baja" onclick="setPriority(this)">● Baja</button>
+          <button class="priority-btn" data-p="Media" onclick="setPriority(this)">● Media</button>
+          <button class="priority-btn" data-p="Alta" onclick="setPriority(this)">● Alta</button>
         </div>
       </div>
-
       <div style="margin-bottom:1.2rem">
         <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem">Estado</div>
-        <div style="display:flex;gap:0.5rem">
-          <button class="priority-btn active-high" id="eb-pend" data-e="Pendiente" onclick="setEstado(this)">Pendiente</button>
-          <button class="priority-btn" id="eb-proc" data-e="En proceso" onclick="setEstado(this)">En proceso</button>
-          <button class="priority-btn" id="eb-res" data-e="Resuelto" onclick="setEstado(this)">Resuelto ✓</button>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <button class="priority-btn active-high" data-e="Pendiente" onclick="setEstado(this)">Pendiente</button>
+          <button class="priority-btn" data-e="En proceso" onclick="setEstado(this)">En proceso</button>
+          <button class="priority-btn" data-e="Resuelto" onclick="setEstado(this)">Resuelto ✓</button>
         </div>
       </div>
-
       <div class="form-submit-area">
         <button class="btn-primary" onclick="submitMaint()">Guardar registro</button>
         <button class="btn-secondary" onclick="clearMaintForm()">Limpiar</button>
-        <span id="maint-status-msg"></span>
+        <span id="maint-status-msg" style="font-size:0.85rem;display:none"></span>
       </div>
     </div>
-
     <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center">
       <select id="mfilt-estado" onchange="loadMaint()" style="background:var(--dark2);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-family:'Barlow',sans-serif;font-size:0.85rem;padding:0.5rem 0.8rem;outline:none">
-        <option value="">Todos los estados</option>
-        <option value="Pendiente">Pendiente</option>
-        <option value="En proceso">En proceso</option>
-        <option value="Resuelto">Resuelto</option>
+        <option value="">Todos los estados</option><option value="Pendiente">Pendiente</option><option value="En proceso">En proceso</option><option value="Resuelto">Resuelto</option>
       </select>
       <select id="mfilt-prio" onchange="loadMaint()" style="background:var(--dark2);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:var(--text);font-family:'Barlow',sans-serif;font-size:0.85rem;padding:0.5rem 0.8rem;outline:none">
-        <option value="">Todas las prioridades</option>
-        <option value="Alta">Alta</option>
-        <option value="Media">Media</option>
-        <option value="Baja">Baja</option>
+        <option value="">Todas las prioridades</option><option value="Alta">Alta</option><option value="Media">Media</option><option value="Baja">Baja</option>
       </select>
     </div>
     <div id="maint-container"><div class="loading-state">Cargando...</div></div>
   </div>
 </section>
 
-<!-- ── FEDERICO ── -->
 <div style="background:var(--dark);border-top:1px solid rgba(255,255,255,0.04)">
 <section id="federico">
   <div class="federico-bg"></div>
   <div class="section-label">Legado familiar</div>
   <div class="section-title">FEDERICO <span class="gold">GARTNER</span></div>
   <div class="section-sep"></div>
-
   <div class="federico-layout">
     <div class="federico-badge-container">
-      <div style="position:relative;width:120px;height:120px;">
-        <img id="federico-photo" src="" alt="Federico Gartner"
-          style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,0.4);display:none;" />
+      <div style="position:relative;width:120px;height:120px">
+        <img id="federico-photo" src="" alt="Federico Gartner" style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,168,76,0.4);display:none" />
         <div class="racer-initials" id="federico-initials">FG</div>
-        <label for="federico-photo-input" title="Subir foto de Federico"
-          style="position:absolute;bottom:2px;right:2px;width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;border:2px solid var(--dark)">📷</label>
+        <label for="federico-photo-input" title="Subir foto" style="position:absolute;bottom:2px;right:2px;width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;border:2px solid var(--dark)">📷</label>
         <input type="file" id="federico-photo-input" accept="image/*" style="display:none" onchange="loadFedericoPhoto(event)" />
       </div>
       <div>
@@ -1140,23 +380,13 @@
         <li>Transmite valores del deporte motor a la siguiente generación</li>
       </ul>
     </div>
-
     <div>
       <div class="federico-bio">
-        <p>
-          Federico Gartner es un <span class="bio-highlight">excorredor de motociclismo a nivel internacional</span>, cuya carrera lo llevó a competir en circuitos de distintas partes del mundo. Su pasión por la velocidad y la adrenalina de la competencia moldearon su carácter desde joven, formándolo como un piloto de alto rendimiento y un profundo conocedor del deporte motor.
-        </p>
-        <p>
-          Con el paso de los años, Federico canalizó esa misma energía hacia el mundo empresarial. Hoy se desempeña como <span class="bio-highlight">Gerente de Gestión en BolsaPlast SRL</span>, empresa familiar que respalda el proyecto deportivo de su hijo. Pero la pista nunca lo abandonó del todo.
-        </p>
-        <p>
-          Hoy, Federico es el arquitecto detrás de cada sesión de Benjamín: analiza los tiempos, estudia los circuitos, ajusta el setup del kart y transmite la mentalidad de un <span class="bio-highlight">campeón</span> a quien lleva su apellido. Más que director deportivo, es el primer fan y el primer exigente.
-        </p>
-        <p>
-          La historia de Federico en el deporte motor no terminó en el paddock. Simplemente encontró una nueva forma de correr: a través de los ojos de su hijo.
-        </p>
+        <p>Federico Gartner es un <span class="bio-highlight">excorredor de motociclismo a nivel internacional</span>, cuya carrera lo llevó a competir en circuitos de distintas partes del mundo. Su pasión por la velocidad y la adrenalina de la competencia moldearon su carácter desde joven, formándolo como un piloto de alto rendimiento y un profundo conocedor del deporte motor.</p>
+        <p>Con el paso de los años, Federico canalizó esa misma energía hacia el mundo empresarial. Hoy se desempeña como <span class="bio-highlight">Gerente de Gestión en BolsaPlast SRL</span>, empresa familiar que respalda el proyecto deportivo de su hijo. Pero la pista nunca lo abandonó del todo.</p>
+        <p>Hoy, Federico es el arquitecto detrás de cada sesión de Benjamín: analiza los tiempos, estudia los circuitos, ajusta el setup del kart y transmite la mentalidad de un <span class="bio-highlight">campeón</span> a quien lleva su apellido. Más que director deportivo, es el primer fan y el primer exigente.</p>
+        <p>La historia de Federico en el deporte motor no terminó en el paddock. Simplemente encontró una nueva forma de correr: a través de los ojos de su hijo.</p>
       </div>
-
       <div class="legacy-quote">
         "Cuando ves a tu hijo en la parrilla de largada, entendés por qué corriste toda tu vida. No para ganar trofeos, sino para enseñarle lo que significa dar el máximo."
         <div style="margin-top:0.6rem;font-size:0.75rem;font-style:normal;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">— Federico Gartner</div>
@@ -1166,152 +396,56 @@
 </section>
 </div>
 
-<!-- ── SPONSOR ── -->
 <div id="sponsor">
   <div class="sponsor-eyebrow">Sponsor oficial</div>
   <div class="sponsor-name">BolsaPlast <span class="srl">SRL</span></div>
   <div class="sponsor-desc">Orgulloso patrocinador del proyecto Benja #95</div>
 </div>
 
-<!-- ── FOOTER ── -->
 <footer>
   <p>© 2025 <strong>Benjamín Gartner #95</strong> — Todos los derechos reservados</p>
   <p style="margin-top:0.4rem">Un proyecto <strong>BolsaPlast SRL</strong> · Desarrollado con pasión por el automovilismo</p>
 </footer>
 
-<!-- ── SUPABASE + LÓGICA ── -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
-  // ── CREDENCIALES HARDCODEADAS ──
   const SUPABASE_URL = 'https://lyemoykxwduwcvqcglkx.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5ZW1veWt4d2R1d2N2cWNnbGt4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MjY3NjYsImV4cCI6MjA5NDMwMjc2Nn0.ljUK3D7IB1PkDadm-cKxbkMSWjrXmfOPLXZ-ZTWbsrE';
 
-  // ── ESTADO GLOBAL ──
-  let supabaseClient = null;
-  let localMode = false;
-  let localDB = { sessions: [], maintenance: [] };
+  let sb = null;
   let selectedType = 'Prueba';
   let selectedPriority = 'Baja';
   let selectedEstado = 'Pendiente';
 
-  // ── INIT ──
+  function today(){ return new Date().toISOString().split('T')[0]; }
+
   window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
-    document.getElementById('m-date').value = new Date().toISOString().split('T')[0];
-
-    // Cargar foto de Federico si existe
-    const savedPhoto = localStorage.getItem('federico_photo');
-    if (savedPhoto) applyFedericoPhoto(savedPhoto);
-
-    // Conectar directo con credenciales hardcodeadas
-    initSupabase(SUPABASE_URL, SUPABASE_KEY);
+    document.getElementById('f-date').value = today();
+    document.getElementById('m-date').value = today();
+    const saved = localStorage.getItem('federico_photo');
+    if (saved) applyFedericoPhoto(saved);
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    loadAll();
   });
 
-  // ── FOTO FEDERICO ──
-  function loadFedericoPhoto(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target.result;
-      localStorage.setItem('federico_photo', dataUrl);
-      applyFedericoPhoto(dataUrl);
-    };
-    reader.readAsDataURL(file);
+  function loadFedericoPhoto(e) {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = ev => { localStorage.setItem('federico_photo', ev.target.result); applyFedericoPhoto(ev.target.result); };
+    r.readAsDataURL(f);
   }
-  function applyFedericoPhoto(dataUrl) {
+  function applyFedericoPhoto(src) {
     const img = document.getElementById('federico-photo');
-    const initials = document.getElementById('federico-initials');
-    img.src = dataUrl;
-    img.style.display = 'block';
-    if (initials) initials.style.display = 'none';
+    const ini = document.getElementById('federico-initials');
+    img.src = src; img.style.display = 'block';
+    if (ini) ini.style.display = 'none';
   }
 
-  function initSupabase(url, key) {
-    try {
-      supabaseClient = supabase.createClient(url, key);
-      localMode = false;
-      document.getElementById('configOverlay').classList.remove('show');
-      loadAll();
-    } catch(e) {
-      console.warn('Supabase init failed, using local mode:', e.message);
-      useLocalMode();
-    }
-  }
-
-  function saveConfig() {
-    const url = document.getElementById('cfgUrl').value.trim();
-    const key = document.getElementById('cfgKey').value.trim();
-    if (!url || !key) { showConfigError('Completá ambos campos.'); return; }
-    localStorage.setItem('sb_url', url);
-    localStorage.setItem('sb_key', key);
-    initSupabase(url, key);
-  }
-
-  function useLocalMode() {
-    localMode = true;
-    const stored = localStorage.getItem('benja95_local');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      localDB = { sessions: parsed.sessions || [], maintenance: parsed.maintenance || [] };
-    }
-    document.getElementById('configOverlay').classList.remove('show');
-    loadAll();
-  }
-
-  function showConfigError(msg) {
-    const el = document.getElementById('configError');
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-
-  // ── SQL SCHEMA (para mostrar en consola) ──
-  const SQL_SCHEMA = `
--- Tabla sesiones (si no la creaste aún):
-CREATE TABLE IF NOT EXISTS sessions (
-  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  created_at timestamp with time zone DEFAULT now(),
-  date date NOT NULL,
-  circuit text NOT NULL,
-  type text NOT NULL DEFAULT 'Prueba',
-  position integer,
-  total_time text,
-  best_lap text,
-  worst_lap text,
-  laps integer,
-  temperature numeric,
-  weather text,
-  notes text
-);
-ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow all sessions" ON sessions FOR ALL USING (true) WITH CHECK (true);
-
--- Tabla mantenimiento (NUEVA):
-CREATE TABLE IF NOT EXISTS maintenance (
-  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  created_at timestamp with time zone DEFAULT now(),
-  date date NOT NULL,
-  part text NOT NULL,
-  title text,
-  desc text,
-  taller text,
-  km text,
-  cost numeric,
-  prioridad text DEFAULT 'Baja',
-  estado text DEFAULT 'Pendiente'
-);
-ALTER TABLE maintenance ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow all maintenance" ON maintenance FOR ALL USING (true) WITH CHECK (true);
-  `;
-  console.log('%cEsquema SQL para Supabase:', 'color:#C9A84C;font-weight:bold;font-size:14px');
-  console.log(SQL_SCHEMA);
-
-  // ── TABS ──
-  function switchTab(name) {
+  function switchTab(e, name) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    e.target.classList.add('active');
     document.getElementById('tab-' + name).classList.add('active');
-    event.target.classList.add('active');
     if (name === 'historial') loadHistory();
     if (name === 'circuitos') loadCircuits();
     if (name === 'mantenimiento') loadMaint();
@@ -1319,392 +453,231 @@ CREATE POLICY "Allow all maintenance" ON maintenance FOR ALL USING (true) WITH C
 
   function setType(btn) {
     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedType = btn.dataset.type;
+    btn.classList.add('active'); selectedType = btn.dataset.type;
   }
-
   function setPriority(btn) {
-    document.querySelectorAll('.priority-btn[data-p]').forEach(b => {
-      b.className = 'priority-btn';
-    });
-    const p = btn.dataset.p;
-    selectedPriority = p;
-    btn.classList.add(p === 'Baja' ? 'active-low' : p === 'Media' ? 'active-med' : 'active-high');
+    document.querySelectorAll('[data-p]').forEach(b => b.className = 'priority-btn');
+    selectedPriority = btn.dataset.p;
+    btn.classList.add(selectedPriority==='Baja'?'active-low':selectedPriority==='Media'?'active-med':'active-high');
   }
-
   function setEstado(btn) {
-    document.querySelectorAll('.priority-btn[data-e]').forEach(b => {
-      b.className = 'priority-btn';
-    });
-    const e = btn.dataset.e;
-    selectedEstado = e;
-    btn.classList.add(e === 'Pendiente' ? 'active-high' : e === 'En proceso' ? 'active-med' : 'active-low');
+    document.querySelectorAll('[data-e]').forEach(b => b.className = 'priority-btn');
+    selectedEstado = btn.dataset.e;
+    btn.classList.add(selectedEstado==='Pendiente'?'active-high':selectedEstado==='En proceso'?'active-med':'active-low');
   }
 
-  // ── LOAD ALL ──
   async function loadAll() {
-    await loadHistory();
-    await loadCircuits();
-    await updateStats();
-    await populateCircuitDatalist();
+    await Promise.all([loadHistory(), loadCircuits(), updateStats(), populateCircuitDatalist()]);
   }
 
-  // ── GET SESSIONS ──
-  async function getSessions(filters = {}) {
-    if (localMode) {
-      let data = [...localDB.sessions];
-      if (filters.type) data = data.filter(s => s.type === filters.type);
-      if (filters.circuit) data = data.filter(s => s.circuit.toLowerCase().includes(filters.circuit.toLowerCase()));
-      if (filters.year) data = data.filter(s => s.date && s.date.startsWith(filters.year));
-      return data.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-
-    let q = supabaseClient.from('sessions').select('*').order('date', { ascending: false });
-    if (filters.type) q = q.eq('type', filters.type);
-    if (filters.circuit) q = q.ilike('circuit', `%${filters.circuit}%`);
-    if (filters.year) q = q.gte('date', filters.year + '-01-01').lte('date', filters.year + '-12-31');
-
-    const { data, error } = await q;
-    if (error) { console.error('Supabase error:', error); return []; }
-    return data || [];
+  async function getSessions(filters={}) {
+    let q = sb.from('sessions').select('*').order('date',{ascending:false});
+    if (filters.type) q = q.eq('type',filters.type);
+    if (filters.circuit) q = q.ilike('circuit',`%${filters.circuit}%`);
+    if (filters.year) q = q.gte('date',filters.year+'-01-01').lte('date',filters.year+'-12-31');
+    const {data,error} = await q;
+    if (error){console.error(error);return[];}
+    return data||[];
   }
 
-  // ── HISTORIAL ──
   async function loadHistory() {
-    const container = document.getElementById('history-container');
-    container.innerHTML = '<div class="loading-state">Cargando...</div>';
-
-    const filters = {
+    const c = document.getElementById('history-container');
+    c.innerHTML = '<div class="loading-state">Cargando...</div>';
+    const sessions = await getSessions({
       type: document.getElementById('filt-type').value,
       circuit: document.getElementById('filt-circuit').value,
-      year: document.getElementById('filt-year').value,
-    };
-
-    const sessions = await getSessions(filters);
-
-    if (!sessions.length) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <p>No hay registros aún. ¡Cargá la primera sesión de Benja!</p>
-        </div>`;
-      return;
-    }
-
-    container.innerHTML = sessions.map(s => renderRecord(s)).join('');
+      year: document.getElementById('filt-year').value
+    });
+    if (!sessions.length){c.innerHTML='<div class="empty-state"><p>No hay registros aún. ¡Cargá la primera sesión de Benja!</p></div>';return;}
+    c.innerHTML = sessions.map(renderRecord).join('');
   }
 
   function renderRecord(s) {
-    const d = s.date ? new Date(s.date + 'T12:00:00') : new Date();
-    const day = d.getDate().toString().padStart(2, '0');
-    const month = d.toLocaleString('es-AR', { month: 'short' }).toUpperCase();
+    const d = new Date(s.date+'T12:00:00');
+    const day = d.getDate().toString().padStart(2,'0');
+    const month = d.toLocaleString('es-AR',{month:'short'}).toUpperCase();
     const year = d.getFullYear();
-    const isComp = s.type === 'Competencia' || s.type === 'Clasificación';
-
+    const isComp = s.type==='Competencia'||s.type==='Clasificación';
     let posHtml = '';
     if (s.position) {
-      const cls = s.position === 1 ? 'pos-1' : s.position === 2 ? 'pos-2' : s.position === 3 ? 'pos-3' : 'pos-other';
-      const suf = s.position === 1 ? 'er' : s.position === 2 ? 'do' : s.position === 3 ? 'er' : 'to';
+      const cls = s.position===1?'pos-1':s.position===2?'pos-2':s.position===3?'pos-3':'pos-other';
+      const suf = s.position===1?'er':s.position===2?'do':'to';
       posHtml = `<div class="pos-badge ${cls}">${s.position}<span class="pos-sup">${suf}</span></div>`;
     }
-
-    const meta = [];
-    if (s.total_time) meta.push({ label: 'Tiempo total', value: s.total_time });
-    if (s.best_lap) meta.push({ label: 'Mejor vuelta', value: s.best_lap, highlight: true });
-    if (s.worst_lap) meta.push({ label: 'Peor vuelta', value: s.worst_lap });
-    if (s.laps) meta.push({ label: 'Vueltas', value: s.laps });
-    if (s.temperature) meta.push({ label: 'Temp.', value: s.temperature + '°C' });
-    if (s.weather) meta.push({ label: 'Clima', value: s.weather });
-
-    return `
-      <div class="record-card ${isComp ? 'competencia' : ''}">
-        <div class="record-date">
-          <div class="day">${day}</div>
-          <div class="month">${month}</div>
-          <div class="month">${year}</div>
-        </div>
-        <div class="record-main">
-          <div class="record-header">
-            <span class="record-circuit">${s.circuit}</span>
-            <span class="record-type-badge">${s.type}</span>
-          </div>
-          <div class="record-meta">
-            ${meta.map(m => `
-              <div class="record-meta-item">
-                <span class="label">${m.label}</span>
-                <span class="value ${m.highlight ? 'highlight' : ''}">${m.value}</span>
-              </div>`).join('')}
-          </div>
-          ${s.notes ? `<div class="record-notes">${s.notes}</div>` : ''}
-        </div>
-        <div class="record-side">${posHtml}</div>
-      </div>`;
+    const meta=[];
+    if(s.total_time)meta.push({l:'Tiempo total',v:s.total_time});
+    if(s.best_lap)meta.push({l:'Mejor vuelta',v:s.best_lap,hi:true});
+    if(s.worst_lap)meta.push({l:'Peor vuelta',v:s.worst_lap});
+    if(s.laps)meta.push({l:'Vueltas',v:s.laps});
+    if(s.temperature)meta.push({l:'Temp.',v:s.temperature+'°C'});
+    if(s.weather)meta.push({l:'Clima',v:s.weather});
+    return `<div class="record-card ${isComp?'competencia':''}">
+      <div class="record-date"><div class="day">${day}</div><div class="month">${month}</div><div class="month">${year}</div></div>
+      <div class="record-main">
+        <div class="record-header"><span class="record-circuit">${s.circuit}</span><span class="record-type-badge">${s.type}</span></div>
+        <div class="record-meta">${meta.map(m=>`<div class="record-meta-item"><span class="label">${m.l}</span><span class="value ${m.hi?'highlight':''}">${m.v}</span></div>`).join('')}</div>
+        ${s.notes?`<div class="record-notes">${s.notes}</div>`:''}
+      </div>
+      <div class="record-side">${posHtml}</div>
+    </div>`;
   }
 
-  // ── CIRCUITOS ──
   async function loadCircuits() {
-    const container = document.getElementById('circuits-container');
+    const c = document.getElementById('circuits-container');
     const sessions = await getSessions();
-
-    const circuits = {};
-    sessions.forEach(s => {
-      if (!circuits[s.circuit]) circuits[s.circuit] = { sessions: 0, best: null, podiums: 0 };
+    const circuits={};
+    sessions.forEach(s=>{
+      if(!circuits[s.circuit])circuits[s.circuit]={sessions:0,best:null,podiums:0};
       circuits[s.circuit].sessions++;
-      if (s.best_lap) {
-        const prev = circuits[s.circuit].best;
-        if (!prev || s.best_lap < prev) circuits[s.circuit].best = s.best_lap;
-      }
-      if (s.position && s.position <= 3) circuits[s.circuit].podiums++;
+      if(s.best_lap&&(!circuits[s.circuit].best||s.best_lap<circuits[s.circuit].best))circuits[s.circuit].best=s.best_lap;
+      if(s.position&&s.position<=3)circuits[s.circuit].podiums++;
     });
-
-    const names = Object.keys(circuits);
-    if (!names.length) {
-      container.innerHTML = '<div class="loading-state">No hay circuitos registrados aún.</div>';
-      return;
-    }
-
-    container.innerHTML = `<div class="circuit-grid">` +
-      names.map(name => `
-        <div class="circuit-card">
-          <div class="circuit-card-name">${name}</div>
-          <div class="circuit-card-stats">
-            <div class="circuit-stat">
-              <span class="label">Sesiones</span>
-              <span class="value">${circuits[name].sessions}</span>
-            </div>
-            ${circuits[name].best ? `<div class="circuit-stat">
-              <span class="label">Mejor vuelta</span>
-              <span class="value" style="color:var(--gold)">${circuits[name].best}</span>
-            </div>` : ''}
-            ${circuits[name].podiums ? `<div class="circuit-stat">
-              <span class="label">Podios</span>
-              <span class="value" style="color:var(--gold)">${circuits[name].podiums}</span>
-            </div>` : ''}
-          </div>
-        </div>`).join('') + `</div>`;
+    const names=Object.keys(circuits);
+    if(!names.length){c.innerHTML='<div class="loading-state">No hay circuitos registrados aún.</div>';return;}
+    c.innerHTML=`<div class="circuit-grid">${names.map(n=>`<div class="circuit-card">
+      <div class="circuit-card-name">${n}</div>
+      <div class="circuit-card-stats">
+        <div class="circuit-stat"><span class="label">Sesiones</span><span class="value">${circuits[n].sessions}</span></div>
+        ${circuits[n].best?`<div class="circuit-stat"><span class="label">Mejor vuelta</span><span class="value" style="color:var(--gold)">${circuits[n].best}</span></div>`:''}
+        ${circuits[n].podiums?`<div class="circuit-stat"><span class="label">Podios</span><span class="value" style="color:var(--gold)">${circuits[n].podiums}</span></div>`:''}
+      </div></div>`).join('')}</div>`;
   }
 
-  // ── STATS ──
   async function updateStats() {
     const sessions = await getSessions();
-    const circuits = new Set(sessions.map(s => s.circuit)).size;
-    const podiums = sessions.filter(s => s.position && s.position <= 3).length;
-    let bestLap = null;
-    sessions.forEach(s => {
-      if (s.best_lap) {
-        if (!bestLap || s.best_lap < bestLap) bestLap = s.best_lap;
-      }
-    });
-
-    document.getElementById('stat-sesiones').textContent = sessions.length || '0';
-    document.getElementById('stat-circuitos').textContent = circuits || '0';
-    document.getElementById('stat-mejor').textContent = bestLap || '—';
-    document.getElementById('stat-podios').textContent = podiums || '0';
+    const circuits = new Set(sessions.map(s=>s.circuit)).size;
+    const podiums = sessions.filter(s=>s.position&&s.position<=3).length;
+    let best=null;
+    sessions.forEach(s=>{if(s.best_lap&&(!best||s.best_lap<best))best=s.best_lap;});
+    document.getElementById('stat-sesiones').textContent=sessions.length||'0';
+    document.getElementById('stat-circuitos').textContent=circuits||'0';
+    document.getElementById('stat-mejor').textContent=best||'—';
+    document.getElementById('stat-podios').textContent=podiums||'0';
   }
 
-  // ── DATALIST ──
   async function populateCircuitDatalist() {
     const sessions = await getSessions();
-    const circuits = [...new Set(sessions.map(s => s.circuit))];
-    const dl = document.getElementById('circuit-list');
-    dl.innerHTML = circuits.map(c => `<option value="${c}">`).join('');
+    const circuits = [...new Set(sessions.map(s=>s.circuit))];
+    document.getElementById('circuit-list').innerHTML=circuits.map(c=>`<option value="${c}">`).join('');
   }
 
-  // ── SUBMIT ──
   async function submitSession() {
-    const circuit = document.getElementById('f-circuit').value.trim();
-    const date = document.getElementById('f-date').value;
-    if (!circuit || !date) {
-      showStatus('Completá circuito y fecha.', true);
-      return;
-    }
-
-    const session = {
-      date,
-      circuit,
-      type: selectedType,
-      position: parseInt(document.getElementById('f-pos').value) || null,
-      total_time: document.getElementById('f-total').value.trim() || null,
-      best_lap: document.getElementById('f-best').value.trim() || null,
-      worst_lap: document.getElementById('f-worst').value.trim() || null,
-      laps: parseInt(document.getElementById('f-laps').value) || null,
-      temperature: parseFloat(document.getElementById('f-temp').value) || null,
-      weather: document.getElementById('f-clima').value || null,
-      notes: document.getElementById('f-notes').value.trim() || null,
+    const circuit=document.getElementById('f-circuit').value.trim();
+    const date=document.getElementById('f-date').value;
+    if(!circuit||!date){showStatus('Completá circuito y fecha.',true);return;}
+    const session={date,circuit,type:selectedType,
+      position:parseInt(document.getElementById('f-pos').value)||null,
+      total_time:document.getElementById('f-total').value.trim()||null,
+      best_lap:document.getElementById('f-best').value.trim()||null,
+      worst_lap:document.getElementById('f-worst').value.trim()||null,
+      laps:parseInt(document.getElementById('f-laps').value)||null,
+      temperature:parseFloat(document.getElementById('f-temp').value)||null,
+      weather:document.getElementById('f-clima').value||null,
+      notes:document.getElementById('f-notes').value.trim()||null
     };
-
-    if (localMode) {
-      session.id = Date.now().toString();
-      session.created_at = new Date().toISOString();
-      localDB.sessions.unshift(session);
-      localStorage.setItem('benja95_local', JSON.stringify(localDB));
-      showStatus('✓ Sesión guardada localmente.', false);
+    try{
+      const{error}=await sb.from('sessions').insert([session]);
+      if(error)throw error;
+      showStatus('✓ Sesión guardada.',false);
       clearForm();
       await updateStats();
       await populateCircuitDatalist();
-      return;
-    }
-
-    try {
-      const { error } = await supabaseClient.from('sessions').insert([session]);
-      if (error) throw error;
-      showStatus('✓ Sesión guardada en Supabase.', false);
-      clearForm();
-      await updateStats();
-      await populateCircuitDatalist();
-    } catch(e) {
-      showStatus('Error: ' + e.message, true);
-      console.error(e);
-    }
+    }catch(e){showStatus('Error: '+e.message,true);}
   }
 
-  function showStatus(msg, isError) {
-    const el = document.getElementById('status-msg');
-    el.textContent = msg;
-    el.className = isError ? 'error' : '';
-    el.style.display = 'inline';
-    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  function showStatus(msg,isError){
+    const el=document.getElementById('status-msg');
+    el.textContent=msg;el.className=isError?'error':'';el.style.display='inline';
+    setTimeout(()=>{el.style.display='none';},4000);
+  }
+  function clearForm(){
+    ['f-circuit','f-total','f-best','f-worst','f-notes'].forEach(id=>document.getElementById(id).value='');
+    ['f-pos','f-laps','f-temp'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('f-clima').value='';
+    document.getElementById('f-date').value=today();
   }
 
-  function clearForm() {
-    ['f-circuit','f-total','f-best','f-worst','f-notes'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
-    ['f-pos','f-laps','f-temp'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
-    document.getElementById('f-clima').value = '';
-    document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
-  }
-
-  // ── MANTENIMIENTO ──
-  async function getMaint(filters = {}) {
-    if (localMode) {
-      let data = [...(localDB.maintenance || [])];
-      if (filters.estado) data = data.filter(m => m.estado === filters.estado);
-      if (filters.prioridad) data = data.filter(m => m.prioridad === filters.prioridad);
-      return data.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-    let q = supabaseClient.from('maintenance').select('*').order('date', { ascending: false });
-    if (filters.estado) q = q.eq('estado', filters.estado);
-    if (filters.prioridad) q = q.eq('prioridad', filters.prioridad);
-    const { data, error } = await q;
-    if (error) { console.error('Maint error:', error); return []; }
-    return data || [];
+  async function getMaint(filters={}) {
+    let q=sb.from('maintenance').select('*').order('date',{ascending:false});
+    if(filters.estado)q=q.eq('estado',filters.estado);
+    if(filters.prioridad)q=q.eq('prioridad',filters.prioridad);
+    const{data,error}=await q;
+    if(error){console.error(error);return[];}
+    return data||[];
   }
 
   async function loadMaint() {
-    const container = document.getElementById('maint-container');
-    container.innerHTML = '<div class="loading-state">Cargando...</div>';
-    const filters = {
-      estado: document.getElementById('mfilt-estado').value,
-      prioridad: document.getElementById('mfilt-prio').value,
-    };
-    const records = await getMaint(filters);
-    const all = await getMaint();
-
-    // Summary
-    const pending = all.filter(m => m.estado === 'Pendiente' || m.estado === 'En proceso').length;
-    const totalCost = all.reduce((s, m) => s + (parseFloat(m.cost) || 0), 0);
-    document.getElementById('ms-total').textContent = all.length || '0';
-    document.getElementById('ms-pendientes').textContent = pending || '0';
-    document.getElementById('ms-costo').textContent = totalCost > 0 ? '$' + totalCost.toLocaleString('es-AR') : '—';
-
-    if (!records.length) {
-      container.innerHTML = '<div class="empty-state"><p>No hay registros de mantenimiento aún.</p></div>';
-      return;
-    }
-    container.innerHTML = records.map(m => renderMaint(m)).join('');
+    const c=document.getElementById('maint-container');
+    c.innerHTML='<div class="loading-state">Cargando...</div>';
+    const filters={estado:document.getElementById('mfilt-estado').value,prioridad:document.getElementById('mfilt-prio').value};
+    const[records,all]=await Promise.all([getMaint(filters),getMaint()]);
+    const pending=all.filter(m=>m.estado==='Pendiente'||m.estado==='En proceso').length;
+    const totalCost=all.reduce((s,m)=>s+(parseFloat(m.cost)||0),0);
+    document.getElementById('ms-total').textContent=all.length||'0';
+    document.getElementById('ms-pendientes').textContent=pending||'0';
+    document.getElementById('ms-costo').textContent=totalCost>0?'$'+totalCost.toLocaleString('es-AR'):'—';
+    if(!records.length){c.innerHTML='<div class="empty-state"><p>No hay registros de mantenimiento aún.</p></div>';return;}
+    c.innerHTML=records.map(renderMaint).join('');
   }
 
   function renderMaint(m) {
-    const d = m.date ? new Date(m.date + 'T12:00:00') : new Date();
-    const day = d.getDate().toString().padStart(2, '0');
-    const mon = d.toLocaleString('es-AR', { month: 'short' }).toUpperCase();
-    const prioClass = 'prioridad-' + (m.prioridad || 'Baja');
-    const estadoClass = 'estado-' + (m.estado || 'Pendiente').replace(' ', '-');
-    const estadoPillClass = 'estado-pill estado-' + (m.estado || 'Pendiente').replace(' ', '-');
-    return `
-      <div class="maint-record ${prioClass} ${estadoClass}">
-        <div class="maint-date">
-          <div class="day">${day}</div>
-          <div class="mon">${mon}</div>
-          <div class="mon">${d.getFullYear()}</div>
+    const d=new Date(m.date+'T12:00:00');
+    const day=d.getDate().toString().padStart(2,'0');
+    const mon=d.toLocaleString('es-AR',{month:'short'}).toUpperCase();
+    const pCls='prioridad-'+(m.prioridad||'Baja');
+    const eCls='estado-'+(m.estado||'Pendiente').replace(' ','-');
+    const pillCls='estado-pill estado-'+(m.estado||'Pendiente').replace(' ','-');
+    const pColor=m.prioridad==='Alta'?'#ff6b6b':m.prioridad==='Media'?'var(--gold)':'#4ade80';
+    return `<div class="maint-record ${pCls} ${eCls}">
+      <div class="maint-date"><div class="day">${day}</div><div class="mon">${mon}</div><div class="mon">${d.getFullYear()}</div></div>
+      <div>
+        <div class="maint-title">${m.title||m.part}</div>
+        <div class="maint-part">📦 ${m.part}</div>
+        ${m.description?`<div class="maint-desc">${m.description}</div>`:''}
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;align-items:center">
+          ${m.taller?`<span style="font-size:0.78rem;color:var(--gray)">🔧 ${m.taller}</span>`:''}
+          ${m.km?`<span style="font-size:0.78rem;color:var(--gray)">⏱ ${m.km}</span>`:''}
+          <span class="${pillCls}">${m.estado||'Pendiente'}</span>
+          <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:${pColor}">● ${m.prioridad||'Baja'}</span>
         </div>
-        <div>
-          <div class="maint-title">${m.title || m.part}</div>
-          <div class="maint-part">📦 ${m.part}</div>
-          ${m.desc ? `<div class="maint-desc">${m.desc}</div>` : ''}
-          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;align-items:center">
-            ${m.taller ? `<span style="font-size:0.78rem;color:var(--gray)">🔧 ${m.taller}</span>` : ''}
-            ${m.km ? `<span style="font-size:0.78rem;color:var(--gray)">⏱ ${m.km}</span>` : ''}
-            <span class="${estadoPillClass}">${m.estado || 'Pendiente'}</span>
-            <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:${m.prioridad==='Alta'?'#ff6b6b':m.prioridad==='Media'?'var(--gold)':'#4ade80'}">● ${m.prioridad || 'Baja'}</span>
-          </div>
-        </div>
-        <div style="text-align:right;min-width:80px">
-          ${m.cost ? `<div class="maint-cost">$${parseFloat(m.cost).toLocaleString('es-AR')}</div>` : ''}
-        </div>
-      </div>`;
+      </div>
+      <div style="text-align:right;min-width:80px">${m.cost?`<div class="maint-cost">$${parseFloat(m.cost).toLocaleString('es-AR')}</div>`:''}</div>
+    </div>`;
   }
 
   async function submitMaint() {
-    const part = document.getElementById('m-part').value.trim();
-    const date = document.getElementById('m-date').value;
-    const desc = document.getElementById('m-desc').value.trim();
-    if (!part || !date) { showMaintStatus('Completá parte y fecha.', true); return; }
-
-    const record = {
-      date,
-      part,
-      title: part,
-      desc: desc || null,
-      taller: document.getElementById('m-taller').value.trim() || null,
-      km: document.getElementById('m-km').value.trim() || null,
-      cost: parseFloat(document.getElementById('m-cost').value) || null,
-      prioridad: selectedPriority,
-      estado: selectedEstado,
+    const part=document.getElementById('m-part').value.trim();
+    const date=document.getElementById('m-date').value;
+    if(!part||!date){showMaintStatus('Completá parte y fecha.',true);return;}
+    const record={date,part,title:part,
+      description:document.getElementById('m-desc').value.trim()||null,
+      taller:document.getElementById('m-taller').value.trim()||null,
+      km:document.getElementById('m-km').value.trim()||null,
+      cost:parseFloat(document.getElementById('m-cost').value)||null,
+      prioridad:selectedPriority,estado:selectedEstado
     };
-
-    if (localMode) {
-      record.id = Date.now().toString();
-      if (!localDB.maintenance) localDB.maintenance = [];
-      localDB.maintenance.unshift(record);
-      localStorage.setItem('benja95_local', JSON.stringify(localDB));
-      showMaintStatus('✓ Registro guardado.', false);
-      clearMaintForm();
-      await loadMaint();
-      return;
-    }
-    try {
-      const { error } = await supabaseClient.from('maintenance').insert([record]);
-      if (error) throw error;
-      showMaintStatus('✓ Guardado en Supabase.', false);
-      clearMaintForm();
-      await loadMaint();
-    } catch(e) {
-      showMaintStatus('Error: ' + e.message, true);
-    }
+    try{
+      const{error}=await sb.from('maintenance').insert([record]);
+      if(error)throw error;
+      showMaintStatus('✓ Registro guardado.',false);
+      clearMaintForm();await loadMaint();
+    }catch(e){showMaintStatus('Error: '+e.message,true);}
   }
 
-  function showMaintStatus(msg, isError) {
-    const el = document.getElementById('maint-status-msg');
-    el.textContent = msg;
-    el.style.color = isError ? '#ff6b6b' : 'var(--gold)';
-    el.style.display = 'inline';
-    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  function showMaintStatus(msg,isError){
+    const el=document.getElementById('maint-status-msg');
+    el.textContent=msg;el.style.color=isError?'#ff6b6b':'var(--gold)';el.style.display='inline';
+    setTimeout(()=>{el.style.display='none';},4000);
+  }
+  function clearMaintForm(){
+    ['m-part','m-desc','m-taller','m-km','m-cost'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('m-date').value=today();
   }
 
-  function clearMaintForm() {
-    ['m-part','m-desc','m-taller','m-km','m-cost'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('m-date').value = new Date().toISOString().split('T')[0];
-  }
-
-  // ── SMOOTH SCROLL FIX ──
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const el=document.getElementById(a.getAttribute('href').slice(1));
+      if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
     });
   });
 </script>
