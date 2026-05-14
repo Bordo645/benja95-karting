@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Benjamín #95 — Karting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500;600&family=Racing+Sans+One&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red: #E8000D;
+    --red-dark: #A30009;
+    --gold: #C9A84C;
+    --gold-light: #F0C84A;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --dark3: #242424;
+    --dark4: #2E2E2E;
+    --gray: #888;
+    --gray-light: #AAAAAA;
+    --white: #F5F5F0;
+    --text: #E8E8E0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ──── NAV ──── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Racing Sans One', sans-serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray-light);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-sponsor {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 5px 14px;
+    border-radius: 3px;
+  }
+  .nav-sponsor span { color: var(--gold); }
+
+  /* ──── HERO ──── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 64px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232,0,13,0.07) 0%, transparent 70%),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(201,168,76,0.018) 40px,
+        rgba(201,168,76,0.018) 41px
+      );
+  }
+  .hero-number {
+    position: absolute;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(14rem, 30vw, 32rem);
+    color: rgba(232,0,13,0.055);
+    line-height: 1;
+    right: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    letter-spacing: -0.04em;
+    user-select: none;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 860px;
+    padding: 2rem;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 5px 16px;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(5rem, 14vw, 11rem);
+    line-height: 0.88;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .hero-name .accent { color: var(--red); }
+  .hero-number-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--gold);
+    background: var(--red);
+    padding: 0.1em 0.4em;
+    margin-left: 0.2em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.1;
+  }
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gray-light);
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+  .hero-subtitle strong {
+    color: var(--gold);
+    font-weight: 600;
+    font-style: normal;
+  }
+  .hero-divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    margin: 1.5rem auto;
+    border-radius: 2px;
+  }
+  .hero-cta {
+    display: inline-flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; justify-content: center;
+  }
+  .btn-primary {
+    background: var(--red);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.75em 2em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--gold);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.75em 2em;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* ──── SECTIONS ──── */
+  section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: 0.01em;
+  }
+  .section-title .gold { color: var(--gold); }
+  .section-sep {
+    width: 50px; height: 3px;
+    background: var(--red);
+    margin: 1rem 0 2.5rem;
+    border-radius: 2px;
+  }
+
+  /* ──── STATS STRIP ──── */
+  #stats-strip {
+    background: var(--dark2);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding: 0;
+  }
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    divide-x: var(--dark4);
+  }
+  .stat-item {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.8rem;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 0.3rem;
+  }
+
+  /* ──── PANEL ──── */
+  #panel { padding-top: 2rem; }
+  .panel-tabs {
+    display: flex; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 2rem;
+  }
+  .tab-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.8rem;
+    background: transparent;
+    color: var(--gray);
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+  }
+  .tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+  .tab-btn:hover:not(.active) { color: var(--gray-light); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Form */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.65rem 0.9rem;
+    transition: border-color 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: rgba(201,168,76,0.5);
+  }
+  .form-group select option { background: var(--dark2); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-row-type {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .type-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.1rem;
+    background: transparent;
+    color: var(--gray-light);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .type-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+  .type-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: var(--white); }
+
+  /* Submit area */
+  .form-submit-area {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  #status-msg {
+    font-size: 0.85rem;
+    color: var(--gold);
+    display: none;
+  }
+  #status-msg.error { color: #ff6b6b; }
+
+  /* Historial */
+  .history-filters {
+    display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+    align-items: center;
+  }
+  .history-filters select,
+  .history-filters input {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+    outline: none;
+  }
+  .history-filters select option { background: var(--dark2); }
+
+  .record-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-left: 3px solid var(--red);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem 2rem;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+  .record-card:hover { border-left-color: var(--gold); }
+  .record-card.competencia { border-left-color: var(--gold); }
+  .record-date {
+    text-align: center;
+    min-width: 56px;
+  }
+  .record-date .day {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--red);
+    line-height: 1;
+  }
+  .record-card.competencia .record-date .day { color: var(--gold); }
+  .record-date .month {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .record-main {}
+  .record-header {
+    display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.3rem;
+  }
+  .record-circuit {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+  .record-type-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    background: rgba(232,0,13,0.2);
+    color: var(--red);
+  }
+  .record-card.competencia .record-type-badge {
+    background: rgba(201,168,76,0.2);
+    color: var(--gold);
+  }
+  .record-meta {
+    display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.6rem;
+  }
+  .record-meta-item {
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .record-meta-item .label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .record-meta-item .value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .record-meta-item .value.highlight {
+    color: var(--gold);
+  }
+  .record-side { text-align: right; min-width: 60px; }
+  .pos-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    line-height: 1;
+    display: inline-block;
+  }
+  .pos-badge.pos-1 { color: var(--gold); }
+  .pos-badge.pos-2 { color: #C0C0C0; }
+  .pos-badge.pos-3 { color: #CD7F32; }
+  .pos-badge.pos-other { color: var(--gray-light); }
+  .pos-sup {
+    font-size: 0.7rem;
+    font-weight: 600;
+    vertical-align: super;
+    color: var(--gray);
+  }
+  .record-notes {
+    font-size: 0.85rem;
+    color: var(--gray);
+    font-style: italic;
+    margin-top: 0.4rem;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--gray);
+  }
+  .empty-state svg { opacity: 0.2; margin-bottom: 1rem; }
+  .empty-state p { font-size: 0.9rem; }
+  .loading-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--gray);
+    font-size: 0.9rem;
+  }
+
+  /* Circuitos */
+  .circuit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .circuit-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .circuit-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); }
+  .circuit-card-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.4rem;
+  }
+  .circuit-card-stats {
+    display: flex; gap: 1.5rem;
+  }
+  .circuit-stat {
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .circuit-stat .label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .circuit-stat .value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  /* ──── FEDERICO ──── */
+  #federico {
+    position: relative;
+    overflow: hidden;
+  }
+  .federico-bg {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 50%;
+    background: linear-gradient(to left, rgba(201,168,76,0.04), transparent);
+    pointer-events: none;
+  }
+  .federico-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .federico-badge-container {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;
+  }
+  .racer-initials {
+    width: 120px; height: 120px;
+    border: 2px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: var(--gold);
+    background: rgba(201,168,76,0.06);
+    letter-spacing: 0.05em;
+  }
+  .racer-role {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: -0.5rem;
+  }
+  .racer-name-big {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.8rem;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .achievements-list {
+    list-style: none;
+    margin-top: 1rem;
+  }
+  .achievements-list li {
+    display: flex; align-items: baseline; gap: 0.7rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.9rem;
+    color: var(--gray-light);
+  }
+  .achievements-list li::before {
+    content: '▸';
+    color: var(--gold);
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+  .federico-bio {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--gray-light);
+  }
+  .federico-bio p { margin-bottom: 1rem; }
+  .federico-bio p:last-child { margin-bottom: 0; }
+  .bio-highlight {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .legacy-quote {
+    margin-top: 2rem;
+    padding: 1.2rem 1.5rem;
+    border-left: 3px solid var(--gold);
+    background: rgba(201,168,76,0.05);
+    border-radius: 0 4px 4px 0;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ──── SPONSOR ──── */
+  #sponsor {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--dark2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    max-width: 100%;
+    margin: 0;
+  }
+  .sponsor-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1.2rem;
+  }
+  .sponsor-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+  }
+  .sponsor-name .srl {
+    color: var(--red);
+    font-size: 0.5em;
+    vertical-align: super;
+  }
+  .sponsor-desc {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--gray);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ──── FOOTER ──── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    padding: 2rem;
+    text-align: center;
+    max-width: 100%;
+  }
+  footer p {
+    font-size: 0.78rem;
+    color: var(--gray);
+    letter-spacing: 0.06em;
+  }
+  footer strong { color: var(--gold); }
+
+  /* ──── SUPABASE CONFIG MODAL ──── */
+  .config-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85);
+    align-items: center; justify-content: center;
+  }
+  .config-overlay.show { display: flex; }
+  .config-modal {
+    background: var(--dark2);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    max-width: 480px;
+    width: 100%;
+    margin: 1rem;
+  }
+  .config-modal h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--white);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .config-modal p {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  .config-modal a { color: var(--gold); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .federico-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .record-card { grid-template-columns: 1fr; }
+    .record-side { display: none; }
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.15s; }
+  .delay-2 { animation-delay: 0.3s; }
+  .delay-3 { animation-delay: 0.45s; }
+  .delay-4 { animation-delay: 0.6s; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--dark4); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+</style>
+</head>
+<body>
+
+<!-- ── CONFIG OVERLAY ── -->
+<div class="config-overlay" id="configOverlay">
+  <div class="config-modal">
+    <h2>⚙ Configurar Supabase</h2>
+    <p>Ingresá las credenciales de tu proyecto Supabase para activar la base de datos. <a href="https://supabase.com/dashboard" target="_blank">Ir al dashboard →</a></p>
+    <div class="form-group" style="margin-bottom:1rem">
+      <label>Supabase URL</label>
+      <input type="text" id="cfgUrl" placeholder="https://xxxxxxxxxxxx.supabase.co" />
+    </div>
+    <div class="form-group" style="margin-bottom:1.5rem">
+      <label>Anon Key (pública)</label>
+      <input type="text" id="cfgKey" placeholder="eyJhbGc..." />
+    </div>
+    <div style="display:flex;gap:0.8rem;flex-wrap:wrap">
+      <button class="btn-primary" onclick="saveConfig()">Guardar y conectar</button>
+      <button class="btn-secondary" onclick="useLocalMode()">Usar modo local</button>
+    </div>
+    <p id="configError" style="color:#ff6b6b;font-size:0.8rem;margin-top:0.8rem;display:none"></p>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#hero">BENJA <span>#95</span></a>
+  <ul class="nav-links">
+    <li><a href="#panel">Panel</a></li>
+    <li><a href="#historial-tab">Historial</a></li>
+    <li><a href="#federico">Federico</a></li>
+    <li><a href="#sponsor">Sponsor</a></li>
+  </ul>
+  <div class="nav-sponsor">Sponsor: <span>BolsaPlast</span></div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-number">95</div>
+  <div class="hero-content">
+    <div class="hero-tag fade-up">🏁 Karting — Temporada 2025</div>
+    <div class="hero-name fade-up delay-1">
+      BENJA<span class="hero-number-badge">#95</span>
+    </div>
+    <div class="hero-divider fade-up delay-2"></div>
+    <div class="hero-subtitle fade-up delay-2">
+      La nueva ilusión de la familia en las carreras.<br>
+      <strong>El gen de la velocidad no descansa.</strong>
+    </div>
+    <p class="fade-up delay-3" style="font-size:0.85rem;color:var(--gray);margin-top:1rem;line-height:1.7;max-width:600px;margin-left:auto;margin-right:auto;">
+      Hijo de Federico Gartner, excorredor de motos a nivel mundial, Benjamín hereda la pasión por la velocidad y escribe su propio capítulo en el mundo del motor.
+    </p>
+    <div class="hero-cta fade-up delay-4">
+      <a class="btn-primary" href="#panel">Ver panel</a>
+      <a class="btn-secondary" href="#federico">Historia familiar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS STRIP ── -->
+<div id="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-value" id="stat-sesiones">—</div>
+      <div class="stat-label">Sesiones totales</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="stat-circuitos">—</div>
+      <div class="stat-label">Circuitos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="stat-mejor">—</div>
+      <div class="stat-label">Mejor vuelta registrada</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value" id="stat-podios">—</div>
+      <div class="stat-label">Podios</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PANEL ── -->
+<section id="panel">
+  <div class="section-label">Panel de datos</div>
+  <div class="section-title">RENDIMIENTO <span class="gold">EN PISTA</span></div>
+  <div class="section-sep"></div>
+
+  <div class="panel-tabs">
+    <button class="tab-btn active" onclick="switchTab('registrar')">+ Registrar sesión</button>
+    <button class="tab-btn" id="historial-tab" onclick="switchTab('historial')">Historial</button>
+    <button class="tab-btn" onclick="switchTab('circuitos')">Circuitos</button>
+  </div>
+
+  <!-- TAB: REGISTRAR -->
+  <div class="tab-content active" id="tab-registrar">
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.6rem">Tipo de sesión</div>
+      <div class="form-row-type">
+        <button class="type-btn active" data-type="Prueba" onclick="setType(this)">🔧 Prueba libre</button>
+        <button class="type-btn" data-type="Clasificación" onclick="setType(this)">⏱ Clasificación</button>
+        <button class="type-btn" data-type="Competencia" onclick="setType(this)">🏁 Competencia</button>
+        <button class="type-btn" data-type="Entrenamiento" onclick="setType(this)">📋 Entrenamiento</button>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group" style="grid-column: span 2;">
+        <label>Circuito *</label>
+        <input type="text" id="f-circuit" placeholder="Ej: Kartódromo Posadas" list="circuit-list" />
+        <datalist id="circuit-list"></datalist>
+      </div>
+      <div class="form-group">
+        <label>Fecha *</label>
+        <input type="date" id="f-date" />
+      </div>
+      <div class="form-group">
+        <label>Posición final</label>
+        <input type="number" id="f-pos" placeholder="Ej: 3" min="1" max="99" />
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Tiempo total (mm:ss.ms)</label>
+        <input type="text" id="f-total" placeholder="Ej: 18:32.450" pattern="\d{1,2}:\d{2}\.\d{3}" />
+      </div>
+      <div class="form-group">
+        <label>Mejor vuelta (ss.ms)</label>
+        <input type="text" id="f-best" placeholder="Ej: 52.340" />
+      </div>
+      <div class="form-group">
+        <label>Peor vuelta (ss.ms)</label>
+        <input type="text" id="f-worst" placeholder="Ej: 55.120" />
+      </div>
+      <div class="form-group">
+        <label>Cantidad de vueltas</label>
+        <input type="number" id="f-laps" placeholder="Ej: 20" min="1" />
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Temperatura (°C)</label>
+        <input type="number" id="f-temp" placeholder="Ej: 28" min="-10" max="50" />
+      </div>
+      <div class="form-group">
+        <label>Condición climática</label>
+        <select id="f-clima">
+          <option value="">Seleccioná...</option>
+          <option value="Soleado ☀️">Soleado ☀️</option>
+          <option value="Nublado ⛅">Nublado ⛅</option>
+          <option value="Llovizna 🌦">Llovizna 🌦</option>
+          <option value="Lluvia 🌧">Lluvia 🌧</option>
+          <option value="Pista húmeda 💧">Pista húmeda 💧</option>
+          <option value="Viento fuerte 💨">Viento fuerte 💨</option>
+        </select>
+      </div>
+      <div class="form-group" style="grid-column: span 2;">
+        <label>Notas / Observaciones</label>
+        <textarea id="f-notes" placeholder="Setup del kart, observaciones, sensaciones del piloto..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-submit-area">
+      <button class="btn-primary" onclick="submitSession()">Guardar sesión</button>
+      <button class="btn-secondary" onclick="clearForm()">Limpiar</button>
+      <span id="status-msg"></span>
+    </div>
+  </div>
+
+  <!-- TAB: HISTORIAL -->
+  <div class="tab-content" id="tab-historial">
+    <div class="history-filters">
+      <select id="filt-type" onchange="loadHistory()">
+        <option value="">Todos los tipos</option>
+        <option value="Prueba">Prueba libre</option>
+        <option value="Clasificación">Clasificación</option>
+        <option value="Competencia">Competencia</option>
+        <option value="Entrenamiento">Entrenamiento</option>
+      </select>
+      <input type="text" id="filt-circuit" placeholder="Filtrar por circuito..." oninput="loadHistory()" style="min-width:200px" />
+      <select id="filt-year" onchange="loadHistory()">
+        <option value="">Todos los años</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select>
+    </div>
+    <div id="history-container">
+      <div class="loading-state">Cargando historial...</div>
+    </div>
+  </div>
+
+  <!-- TAB: CIRCUITOS -->
+  <div class="tab-content" id="tab-circuitos">
+    <div id="circuits-container">
+      <div class="loading-state">Cargando circuitos...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEDERICO ── -->
+<div style="background:var(--dark);border-top:1px solid rgba(255,255,255,0.04)">
+<section id="federico">
+  <div class="federico-bg"></div>
+  <div class="section-label">Legado familiar</div>
+  <div class="section-title">FEDERICO <span class="gold">GARTNER</span></div>
+  <div class="section-sep"></div>
+
+  <div class="federico-layout">
+    <div class="federico-badge-container">
+      <div class="racer-initials">FG</div>
+      <div>
+        <div class="racer-role">Excorredor · Moto GP Amateur</div>
+        <div class="racer-name-big">Federico<br>Gartner</div>
+      </div>
+      <ul class="achievements-list">
+        <li>Competidor en circuitos internacionales de motociclismo</li>
+        <li>Representante argentino en categorías de motos a nivel mundial</li>
+        <li>Décadas de experiencia en competencias de alto rendimiento</li>
+        <li>Mentor y director deportivo de Benjamín #95</li>
+        <li>Fundador de <strong style="color:var(--gold)">BolsaPlast SRL</strong></li>
+        <li>Transmite valores del deporte motor a la siguiente generación</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="federico-bio">
+        <p>
+          Federico Gartner es un <span class="bio-highlight">excorredor de motociclismo a nivel internacional</span>, cuya carrera lo llevó a competir en circuitos de distintas partes del mundo. Su pasión por la velocidad y la adrenalina de la competencia moldearon su carácter desde joven, formándolo como un piloto de alto rendimiento y un profundo conocedor del deporte motor.
+        </p>
+        <p>
+          Con el paso de los años, Federico canalizó esa misma energía hacia el mundo empresarial, fundando <span class="bio-highlight">BolsaPlast SRL</span>, empresa que hoy respalda el proyecto deportivo de su hijo. Pero la pista nunca lo abandonó del todo.
+        </p>
+        <p>
+          Hoy, Federico es el arquitecto detrás de cada sesión de Benjamín: analiza los tiempos, estudia los circuitos, ajusta el setup del kart y transmite la mentalidad de un <span class="bio-highlight">campeón</span> a quien lleva su apellido. Más que director deportivo, es el primer fan y el primer exigente.
+        </p>
+        <p>
+          La historia de Federico en el deporte motor no terminó en el paddock. Simplemente encontró una nueva forma de correr: a través de los ojos de su hijo.
+        </p>
+      </div>
+
+      <div class="legacy-quote">
+        "Cuando ves a tu hijo en la parrilla de largada, entendés por qué corriste toda tu vida. No para ganar trofeos, sino para enseñarle lo que significa dar el máximo."
+        <div style="margin-top:0.6rem;font-size:0.75rem;font-style:normal;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">— Federico Gartner</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ── SPONSOR ── -->
+<div id="sponsor">
+  <div class="sponsor-eyebrow">Sponsor oficial</div>
+  <div class="sponsor-name">BolsaPlast <span class="srl">SRL</span></div>
+  <div class="sponsor-desc">Orgulloso patrocinador del proyecto Benja #95</div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2025 <strong>Benjamín Gartner #95</strong> — Todos los derechos reservados</p>
+  <p style="margin-top:0.4rem">Un proyecto <strong>BolsaPlast SRL</strong> · Desarrollado con pasión por el automovilismo</p>
+</footer>
+
+<!-- ── SUPABASE + LÓGICA ── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  // ── ESTADO GLOBAL ──
+  let supabaseClient = null;
+  let localMode = false;
+  let localDB = { sessions: [] };
+  let selectedType = 'Prueba';
+
+  // ── INIT ──
+  window.addEventListener('DOMContentLoaded', () => {
+    // Set today's date as default
+    document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+
+    // Load config
+    const savedUrl = localStorage.getItem('sb_url');
+    const savedKey = localStorage.getItem('sb_key');
+
+    if (savedUrl && savedKey) {
+      initSupabase(savedUrl, savedKey);
+    } else {
+      document.getElementById('configOverlay').classList.add('show');
+    }
+  });
+
+  function initSupabase(url, key) {
+    try {
+      supabaseClient = supabase.createClient(url, key);
+      localMode = false;
+      document.getElementById('configOverlay').classList.remove('show');
+      loadAll();
+    } catch(e) {
+      showConfigError('Error al conectar: ' + e.message);
+    }
+  }
+
+  function saveConfig() {
+    const url = document.getElementById('cfgUrl').value.trim();
+    const key = document.getElementById('cfgKey').value.trim();
+    if (!url || !key) { showConfigError('Completá ambos campos.'); return; }
+    localStorage.setItem('sb_url', url);
+    localStorage.setItem('sb_key', key);
+    initSupabase(url, key);
+  }
+
+  function useLocalMode() {
+    localMode = true;
+    const stored = localStorage.getItem('benja95_local');
+    if (stored) localDB = JSON.parse(stored);
+    document.getElementById('configOverlay').classList.remove('show');
+    loadAll();
+  }
+
+  function showConfigError(msg) {
+    const el = document.getElementById('configError');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  // ── SQL SCHEMA (para mostrar en consola) ──
+  const SQL_SCHEMA = `
+-- Ejecutá esto en Supabase SQL Editor:
+CREATE TABLE IF NOT EXISTS sessions (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at timestamp with time zone DEFAULT now(),
+  date date NOT NULL,
+  circuit text NOT NULL,
+  type text NOT NULL DEFAULT 'Prueba',
+  position integer,
+  total_time text,
+  best_lap text,
+  worst_lap text,
+  laps integer,
+  temperature numeric,
+  weather text,
+  notes text
+);
+-- Habilitar RLS (Row Level Security) público para pruebas:
+ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow all" ON sessions FOR ALL USING (true) WITH CHECK (true);
+  `;
+  console.log('%cEsquema SQL para Supabase:', 'color:#C9A84C;font-weight:bold;font-size:14px');
+  console.log(SQL_SCHEMA);
+
+  // ── TABS ──
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+    if (name === 'historial') loadHistory();
+    if (name === 'circuitos') loadCircuits();
+  }
+
+  function setType(btn) {
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedType = btn.dataset.type;
+  }
+
+  // ── LOAD ALL ──
+  async function loadAll() {
+    await loadHistory();
+    await loadCircuits();
+    await updateStats();
+    await populateCircuitDatalist();
+  }
+
+  // ── GET SESSIONS ──
+  async function getSessions(filters = {}) {
+    if (localMode) {
+      let data = [...localDB.sessions];
+      if (filters.type) data = data.filter(s => s.type === filters.type);
+      if (filters.circuit) data = data.filter(s => s.circuit.toLowerCase().includes(filters.circuit.toLowerCase()));
+      if (filters.year) data = data.filter(s => s.date && s.date.startsWith(filters.year));
+      return data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+    let q = supabaseClient.from('sessions').select('*').order('date', { ascending: false });
+    if (filters.type) q = q.eq('type', filters.type);
+    if (filters.circuit) q = q.ilike('circuit', `%${filters.circuit}%`);
+    if (filters.year) q = q.gte('date', filters.year + '-01-01').lte('date', filters.year + '-12-31');
+
+    const { data, error } = await q;
+    if (error) { console.error('Supabase error:', error); return []; }
+    return data || [];
+  }
+
+  // ── HISTORIAL ──
+  async function loadHistory() {
+    const container = document.getElementById('history-container');
+    container.innerHTML = '<div class="loading-state">Cargando...</div>';
+
+    const filters = {
+      type: document.getElementById('filt-type').value,
+      circuit: document.getElementById('filt-circuit').value,
+      year: document.getElementById('filt-year').value,
+    };
+
+    const sessions = await getSessions(filters);
+
+    if (!sessions.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <p>No hay registros aún. ¡Cargá la primera sesión de Benja!</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = sessions.map(s => renderRecord(s)).join('');
+  }
+
+  function renderRecord(s) {
+    const d = s.date ? new Date(s.date + 'T12:00:00') : new Date();
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = d.toLocaleString('es-AR', { month: 'short' }).toUpperCase();
+    const year = d.getFullYear();
+    const isComp = s.type === 'Competencia' || s.type === 'Clasificación';
+
+    let posHtml = '';
+    if (s.position) {
+      const cls = s.position === 1 ? 'pos-1' : s.position === 2 ? 'pos-2' : s.position === 3 ? 'pos-3' : 'pos-other';
+      const suf = s.position === 1 ? 'er' : s.position === 2 ? 'do' : s.position === 3 ? 'er' : 'to';
+      posHtml = `<div class="pos-badge ${cls}">${s.position}<span class="pos-sup">${suf}</span></div>`;
+    }
+
+    const meta = [];
+    if (s.total_time) meta.push({ label: 'Tiempo total', value: s.total_time });
+    if (s.best_lap) meta.push({ label: 'Mejor vuelta', value: s.best_lap, highlight: true });
+    if (s.worst_lap) meta.push({ label: 'Peor vuelta', value: s.worst_lap });
+    if (s.laps) meta.push({ label: 'Vueltas', value: s.laps });
+    if (s.temperature) meta.push({ label: 'Temp.', value: s.temperature + '°C' });
+    if (s.weather) meta.push({ label: 'Clima', value: s.weather });
+
+    return `
+      <div class="record-card ${isComp ? 'competencia' : ''}">
+        <div class="record-date">
+          <div class="day">${day}</div>
+          <div class="month">${month}</div>
+          <div class="month">${year}</div>
+        </div>
+        <div class="record-main">
+          <div class="record-header">
+            <span class="record-circuit">${s.circuit}</span>
+            <span class="record-type-badge">${s.type}</span>
+          </div>
+          <div class="record-meta">
+            ${meta.map(m => `
+              <div class="record-meta-item">
+                <span class="label">${m.label}</span>
+                <span class="value ${m.highlight ? 'highlight' : ''}">${m.value}</span>
+              </div>`).join('')}
+          </div>
+          ${s.notes ? `<div class="record-notes">${s.notes}</div>` : ''}
+        </div>
+        <div class="record-side">${posHtml}</div>
+      </div>`;
+  }
+
+  // ── CIRCUITOS ──
+  async function loadCircuits() {
+    const container = document.getElementById('circuits-container');
+    const sessions = await getSessions();
+
+    const circuits = {};
+    sessions.forEach(s => {
+      if (!circuits[s.circuit]) circuits[s.circuit] = { sessions: 0, best: null, podiums: 0 };
+      circuits[s.circuit].sessions++;
+      if (s.best_lap) {
+        const prev = circuits[s.circuit].best;
+        if (!prev || s.best_lap < prev) circuits[s.circuit].best = s.best_lap;
+      }
+      if (s.position && s.position <= 3) circuits[s.circuit].podiums++;
+    });
+
+    const names = Object.keys(circuits);
+    if (!names.length) {
+      container.innerHTML = '<div class="loading-state">No hay circuitos registrados aún.</div>';
+      return;
+    }
+
+    container.innerHTML = `<div class="circuit-grid">` +
+      names.map(name => `
+        <div class="circuit-card">
+          <div class="circuit-card-name">${name}</div>
+          <div class="circuit-card-stats">
+            <div class="circuit-stat">
+              <span class="label">Sesiones</span>
+              <span class="value">${circuits[name].sessions}</span>
+            </div>
+            ${circuits[name].best ? `<div class="circuit-stat">
+              <span class="label">Mejor vuelta</span>
+              <span class="value" style="color:var(--gold)">${circuits[name].best}</span>
+            </div>` : ''}
+            ${circuits[name].podiums ? `<div class="circuit-stat">
+              <span class="label">Podios</span>
+              <span class="value" style="color:var(--gold)">${circuits[name].podiums}</span>
+            </div>` : ''}
+          </div>
+        </div>`).join('') + `</div>`;
+  }
+
+  // ── STATS ──
+  async function updateStats() {
+    const sessions = await getSessions();
+    const circuits = new Set(sessions.map(s => s.circuit)).size;
+    const podiums = sessions.filter(s => s.position && s.position <= 3).length;
+    let bestLap = null;
+    sessions.forEach(s => {
+      if (s.best_lap) {
+        if (!bestLap || s.best_lap < bestLap) bestLap = s.best_lap;
+      }
+    });
+
+    document.getElementById('stat-sesiones').textContent = sessions.length || '0';
+    document.getElementById('stat-circuitos').textContent = circuits || '0';
+    document.getElementById('stat-mejor').textContent = bestLap || '—';
+    document.getElementById('stat-podios').textContent = podiums || '0';
+  }
+
+  // ── DATALIST ──
+  async function populateCircuitDatalist() {
+    const sessions = await getSessions();
+    const circuits = [...new Set(sessions.map(s => s.circuit))];
+    const dl = document.getElementById('circuit-list');
+    dl.innerHTML = circuits.map(c => `<option value="${c}">`).join('');
+  }
+
+  // ── SUBMIT ──
+  async function submitSession() {
+    const circuit = document.getElementById('f-circuit').value.trim();
+    const date = document.getElementById('f-date').value;
+    if (!circuit || !date) {
+      showStatus('Completá circuito y fecha.', true);
+      return;
+    }
+
+    const session = {
+      date,
+      circuit,
+      type: selectedType,
+      position: parseInt(document.getElementById('f-pos').value) || null,
+      total_time: document.getElementById('f-total').value.trim() || null,
+      best_lap: document.getElementById('f-best').value.trim() || null,
+      worst_lap: document.getElementById('f-worst').value.trim() || null,
+      laps: parseInt(document.getElementById('f-laps').value) || null,
+      temperature: parseFloat(document.getElementById('f-temp').value) || null,
+      weather: document.getElementById('f-clima').value || null,
+      notes: document.getElementById('f-notes').value.trim() || null,
+    };
+
+    if (localMode) {
+      session.id = Date.now().toString();
+      session.created_at = new Date().toISOString();
+      localDB.sessions.unshift(session);
+      localStorage.setItem('benja95_local', JSON.stringify(localDB));
+      showStatus('✓ Sesión guardada localmente.', false);
+      clearForm();
+      await updateStats();
+      await populateCircuitDatalist();
+      return;
+    }
+
+    try {
+      const { error } = await supabaseClient.from('sessions').insert([session]);
+      if (error) throw error;
+      showStatus('✓ Sesión guardada en Supabase.', false);
+      clearForm();
+      await updateStats();
+      await populateCircuitDatalist();
+    } catch(e) {
+      showStatus('Error: ' + e.message, true);
+      console.error(e);
+    }
+  }
+
+  function showStatus(msg, isError) {
+    const el = document.getElementById('status-msg');
+    el.textContent = msg;
+    el.className = isError ? 'error' : '';
+    el.style.display = 'inline';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  }
+
+  function clearForm() {
+    ['f-circuit','f-total','f-best','f-worst','f-notes'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    ['f-pos','f-laps','f-temp'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('f-clima').value = '';
+    document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+  }
+
+  // ── SMOOTH SCROLL FIX ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
